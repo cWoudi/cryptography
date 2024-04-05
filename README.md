@@ -27,11 +27,13 @@ Example key.pub file
 
 Encrypting an integer
 `crypt_rsa.c` allows you to encrypt/decrypt an integer stored in a hexadecimal text file. The command takes the following arguments:
-```crypt_rsa -e|-d file.key file.in file.out```
+```
+crypt_rsa -e|-d file.key file.in file.out
+```
 
 
 Encrypting a file
-`crypt_rsa_file.c` allows you to encrypt/decrypt a file.
+`crypt_rsa_file.c` allows you to encrypt/decrypt a file.  The command takes the following arguments:
 ```
 crypt_rsa -e|-d file.key file.in file.out
 ```
