@@ -7,10 +7,8 @@ According to Fermat's little theorem, if $1\leq a < p$, then $a^{p-1} = a^{2^r d
 Therefore, $a^{2^{r-1}d}$ is a solution of the equation $x^2 = 1 \mod p$. Since $p$ is prime, this equation has
 exactly $2$ solutions: $-1$ and $1$.
 
-Ainsi, 
-$$
-a^{2^{r-1}d} \equiv \pm 1 \mod p
-$$
+Thus, 
+![equation](equation.png)
 
 
 By induction, it is shown that we are necessarily in one of the two situations:
