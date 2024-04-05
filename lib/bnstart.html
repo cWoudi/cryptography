@@ -1,0 +1,438 @@
+<html><head><title>bign start doc 1.3</title>
+
+<style type="text/css"><!--
+h1 {margin-bottom: 0em;}
+h4 {margin-top: 0em;}
+table.t td,table.t p, tt {font-family: courier new, courier, serif; font-size: 12pt;}
+table.s, h1, h2, h3, h4, p, ul
+     {font-family: "times new roman", serif; background-color: #FDFDF6;}
+p, ul {font-size: 12pt; margin-top: 0px; margin-bottom: 0.5em;}
+pre {margin-top: 0em;}
+table {margin-top: 10px; margin-bottom: 1em; background-color: #FFFFF8;}
+td {padding-left: 10px; padding-right: 10px; line-height: 1.1em;}
+td {padding: 10px; line-height: 1.1em;}
+p.u, p.u table
+	{margin: 0px 0px 0.2em; padding: 0px; border-style: none; background-color: #FDFDF6;}
+.u td {margin 0px; padding: 0px; vertical-align: bottom; background-color: #FDFDF6;}
+h2, h3 {text-indent: 0em; margin: 0.5em 0em 0.2em;}
+.z {font-family: courier new, courier, serif;}
+ --></style>
+<!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
+<body leftmargin=20 rightmargin=20 bgcolor=#FDFDF6>
+<h1 align="center">bign start document</h1>
+<h4 align="center">document version 1.3 &nbsp; Alan Firminger
+ &nbsp; May 2013</h4>
+
+<h2>intro</h2>
+<p>I have worked on the bign library for over ten years. My purpose was, and is,
+ pleasure.
+<p>I publish it for your pleasure. And my vanity.
+<p>The library is wide and complex. There are tricks and possibilities to all
+ aspects. All are fun, many are useful.
+<p>Every statement here is true for the default condition and the developments
+ of this described. Here is a subset of the whole truth. If you want a feature
+ please look in <a href="buserdoc.html">bign 1.05.- user document.html</a> ,
+ what you want will probably be described there.
+<p>There is a lot of detail, ignore that for a day or two. I suggest that you
+ follow my short introductory course here.
+
+<h2>principles</h2>
+
+<p>Throughout the library details of performance are as you would expect.
+
+<h2>order of code sections</h2>
+
+<p>This sequence is vital.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>&nbsp;<br>your macro definitions for the library
+<br>&nbsp;<br>optionally
+<br>#include a console interface &nbsp;<br>&nbsp;<br>#include "bign.lib"
+<br>&nbsp;<br>your prototypes, global data definitions and functions &nbsp;
+<br>&nbsp;
+</table>
+
+<h2>conventions here</h2>
+
+<p>I use these textual conventions :
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>symbol<td>your choice of
+<tr><td><p><i>N1</i> , <i>N2</i> ...
+<p><i>bn</i> , <i>bn1</i> , <i>bn2</i> ...
+<p><i>i</i><p><i>sm</i>
+<td><p>numeric constants<p>array names for use as big numbers
+<p>integer, that is a c int expression<p>stream
+</table>
+
+<h2>macro definitions</h2>
+
+<p>Your macro definitions establish how the library will operate.
+<p>Definitions may be ommitted completely, this will deliver the default
+ conditions.
+<p>Macros are :
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro definition<td>effect<td>default<td>comment
+<tr><td>#define PREC <i>N1</i>
+<td>sets the overall precision
+<br>of big numbers in unsigned ints
+<td>4
+<td>the minimum value is 4
+<br>the maximum value is near the limit of addressable memory
+<tr><td>#define FRAC <i>N2</i>
+<td>fraction part in unsigned ints
+<td>0
+<td>with FRAC at 0 integer maths is compiled
+<br>at non 0 fractional maths is compiled
+<br>FRAC must be >=0 and < PREC
+<tr><td>#define SIGNED <i>N3</i>
+<td>enables signed or unsigned compilation
+<td>0
+<td>values may be
+<br> &nbsp; 0 &nbsp; neither sign nor code for sign
+<br> &nbsp; &nbsp; &nbsp; is included
+<br> &nbsp; &nbsp; &nbsp; so : 2 - 5 = 3
+<br> &nbsp; 1 &nbsp; one sign element is added to
+<br> &nbsp; &nbsp; &nbsp; every big number
+<br> &nbsp; &nbsp; &nbsp; signed code is compiled throughout
+
+<tr><td>#define B_ROUND <i>N4</i>
+<td>controls rounding process
+<br>after multiply and divide
+<br>effective in fractional computation only
+<br>that is with FRAC > 0
+<td>0<td>values may be
+<br> &nbsp; 0 &nbsp; no rounding is provided
+<br> &nbsp; &nbsp; &nbsp; imprecision rounds towards zero
+<br> &nbsp; 1 &nbsp; if the underflow >= 1
+<br> &nbsp; &nbsp; &nbsp; rounds away from zero
+
+<tr><td><pre>#define ERROR_MODE <i>N5</i>
+<td>controls the response to errors
+<br>throughout the library
+<td>3
+<td>the functions that may return a value
+<br>are int only when needed, otherwise
+<br>void
+<br>they return 0 on success
+<br>defined values for ERROR_MODE may be :
+<br> &nbsp; 0 &nbsp; no checking of errors
+<br> &nbsp; &nbsp; &nbsp; no error response
+<br> &nbsp; 1 &nbsp; error returns 1 to the call
+<br> &nbsp; 2 &nbsp; error responds with a warning
+<br> &nbsp; &nbsp; &nbsp; returns 1
+<br> &nbsp; 3 &nbsp; error invites operator to
+<br> &nbsp; &nbsp; &nbsp; quit or continue
+<br> &nbsp; &nbsp; &nbsp; returns 1
+<br> &nbsp; 4 &nbsp; error causes report and
+ &nbsp; &nbsp; termination
+</table>
+
+<h2>big numbers</h2>
+<p>Big numbers are binary numbers filling unsigned <tt>int</tt>
+ arrays.
+<p>The name of an array is a pointer to that array. big numbers are referenced
+ by name.
+<p>To create one or more big numbers there is a typedef bign that uses your
+ defines for size. So :
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>big_n <i>bn1</i> , <i>bn2</i> ... ;
+<td>define big numbers on the stack
+</table>
+
+<h2>console interface</h2>
+<p>To be platform independant I have developed console interfaces
+ as short files that define macros for console use. One of these may
+ be included to enhance an application.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>console interface<td>interfaces with
+<tr><td>coniface.h<td>conio.h
+<tr><td>dosface.h<td>MS-DOS
+<tr><td>ncurface.h<td>ncurses
+</table>
+
+<h2>active code</h2>
+<p>These functions are available to operate on big numbers.
+<p>They are shown by the call.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=2>int on big number maths
+<tr><td>function call<td>effect
+<tr><td>add_int ( <i>i</i> , <i>bn1</i> , <i>bn2</i> ) ;
+<td><i>bn2</i> = <i>bn1</i> + <i>i</i>
+<tr><td>sub_int ( <i>i</i> , <i>bn1</i> , <i>bn2</i> ) ;
+<td><i>bn2</i> = <i>bn1</i> - <i>i</i>
+<tr><td>mult_int ( <i>i</i> , <i>bn1</i> , <i>bn2</i> ) ;
+<td><i>bn2</i> = <i>i</i> * <i>bn1</i>
+<tr><td>div_int ( <i>i</i> , <i>bn1</i> , <i>bn2</i> ) ;
+<td><i>bn2</i> = <i>bn1</i> / <i>i</i>
+<tr><td>div_bintoi ( <i>bn1</i> , <i>i</i> , <i>bn2</i> ) ;
+<td><i>bn2</i> = <i>i</i> / <i>bn1</i>
+</table>
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=2>big number maths
+<tr><td>function call<td>effect
+<tr><td>zero_big ( <i>bn</i> ) ;<td><i>bn</i> = 0
+<tr><td>copy_big ( <i>bn1</i> , <i>bn2</i> ) ;<td><i>bn2</i> = <i>bn1</i>
+<tr><td>add_big ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> + <i>bn1</i>
+<tr><td>sub_big ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> - <i>bn1</i>
+<tr><td>mult_big ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> * <i>bn1</i>
+<tr><td>div_big ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> / <i>bn1</i>
+<tr><td>mod_big ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> % <i>bn1</i>
+<tr><td>i_div_big ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> \ <i>bn1</i>
+<tr><td>div_big_4 ( <i>bn1</i> , <i>bn2</i> , <i>bn3</i> , <i>bn4</i> ) ;
+<td><i>bn3</i> = <i>bn2</i> \ <i>bn1</i>
+<br><i>bn4</i> = <i>bn2</i> % <i>bn1</i>
+</table>
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3>input function and macro
+<tr><td>kb_2_big ( <i>bn</i> ) ;
+<td>takes <i>bn</i> from the keyboard
+<td rowspan=2>preceding a number with 0x<br>reads it as hexadecimal
+<tr><td>sm_2_big_( <i>sm</i> , <i>bn</i> ) ;
+<td>takes <i>bn</i> from <i>sm</i>
+</table>
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=2>output macros
+<tr><td>cn_(<i>bn</i>) ;<td>sends <i>bn</i> as decimal to the console
+<tr><td>cx_(<i>bn</i>) ;<td>sends <i>bn</i> as hexadecimal to the console
+
+<tr><td>ob_(<i>bn</i>, <i>sm</i> ) ;
+<td>sends <i>bn</i> as decimal to <i>sm</i>
+<tr><td>obx_(<i>bn</i>, <i>sm</i> ) ;
+<td>sends <i>bn</i> as hexadecimal to <i>sm</i>
+<tr><td>bit_show (<i>bn</i>) ;<td>displays the bit pattern of <i>bn</i>
+</table>
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3>test functions
+<tr><td>type<td>call<td>returns
+<tr><td>blong<br>see below<td>n_top ( <i>bn</i> ) ;
+<td>ignores sign of the source
+<br>the most significant bit position
+<br>&nbsp; &nbsp; 0 for a value of 1.000 ...
+<br>&nbsp; &nbsp; -1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0.500 ...
+<tr><td>int<td>cp_abs ( <i>bn1</i> , <i>bn2</i> ) ;
+<td>comparison, respecting sign, of b1 and b2
+<br>&nbsp; &nbsp; - 1 &nbsp; if &nbsp; <i>bn1</i> > <i>bn2</i>
+<br>&nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp;<i>bn1</i> == <i>bn2</i>
+<br>&nbsp; &nbsp; &nbsp; 1 &nbsp; &nbsp; &nbsp; &nbsp;<i>bn1</i> < <i>bn2</i>
+</table>
+
+<h2>compilation</h2>
+<p>The library is compatible with these compiler definitions. By default
+ big numbers are <tt>int</tt> arrays.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>16 bit using a 32 bit long
+<tr><td>32 bit using a 64 bit long
+<tr><td>32 bit using a 64 bit long long
+</table>
+<p>The longer data type is given a <tt>typedef</tt>&nbsp;.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>typedef<td>for
+<tr><td>blong<td>signed 
+<tr><td>ublong<td>unsigned
+</table>
+
+<h2>So where are we</h2>
+
+<p>Above is a subset of the library described. Look in the manual for lots
+ more.
+<p>Below are some applications to get you started.
+
+<h2>fact.c</h2>
+<p>Make a file <tt>fact.c</tt> and copy the text here into it.
+<p>This c application invites you to enter a number into an
+ <tt>int</tt>&nbsp;, it then reports the factorial of the number entered.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>fact.c
+<tr><td><pre>/*	fact.c		makes factorials	*/
+
+	/*			defines		*/
+
+#if 0
+#define ERROR_MODE 2
+#define PREC 10
+#endif
+	/*			includes		*/
+#include "bign.lib"
+
+		/*		prototype and code		*/
+int conv ( char * c ) ;
+
+int main ( )
+{ big_n f ; int i ;
+  char sg [ 12 ] ;
+  while ( 1 )
+  { printf ( "\ntype a number, or q to quit, then enter\n" ) ;
+    scanf ( "%s" , sg ) ;
+    i = conv ( sg ) ;
+    printf ( "\nwith %d elements, factorial of %d is :\n" , PREC , i ) ;
+    num_here ( "1" , f ) ;
+    while ( i > 1 )
+    mult_int ( i -- , f , f ) ;
+    putchar ( '\n' ) ;
+    cn_( f ) ;
+    /* bit_show ( f ) ; */
+    } }
+
+int conv ( char * sg )
+{ int n = 0 ;
+  while ( 1 )
+  { switch ( * sg )
+    { case 'q' : case 'Q' : puts( "\nterminated" ) ; exit ( 0 ) ;
+      case '0' : case '1' : case '2' : case '3' : case '4' :
+      case '5' : case '6' : case '7' : case '8' : case '9' :
+      n = n * 10 + ( ( int ) * sg ) - '0' ;
+      ++ sg ; break ;
+      default : return ( n ) ; } } }
+</table>
+
+<p>Copy, paste and compile this as c .
+<p>Run it. Key in a number, start less than <tt>20</tt>&nbsp;. This is put into
+ an <tt>int</tt>&nbsp;. Execution repeatedly multiplies the int into a big
+ number, and decrements the <tt>int</tt> to <tt>1</tt>&nbsp;.
+<p>After your carriage return the factorial of your entry will be displayed.
+<p>All the features of the library used here have already been described.
+<p>As given the code will compile using the default values. I provide an
+ <tt>#if 0</tt> within which are two defines. Then try moving these defines and
+ changing their values. For a 32 bit compiler a value for <tt>PREC</tt> greater
+ than <tt>130</tt> will make the answer too large to see.
+<p>You can play with it.
+<ul>Perhaps provide the sum of all values by changing <tt>mult_int</tt> to
+ <tt>add_int</tt>&nbsp;.</p>
+<p>Define <tt>FRAC</tt> to <tt>( PREC - 1 )</tt> and change <tt>mult_int</tt>
+ to <tt>div_int</tt>&nbsp;.
+<p>Set <tt>PREC</tt> so that the report fills less than half of the screen and
+ then release <tt>bit_show</tt> from its comment tokens.
+<p>Move <tt>cn_( f ) ;</tt> into the calculate loop, perhaps include a
+ <tt>getchar();</tt> to step through the intermediate answers.</ul>
+
+<h2>tinybn.c</h2>
+<p>Copy, compile and run.
+<p>It is similar to a calculator.
+<p> This is a simple demonstrator showing the maths in action. No console
+ interface is used so command key depressions have to be completed with a
+ carriage return.
+<p>You should soon get bored with this.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0><tr><td>
+<pre>/*	tinybn.c	a simple demo for the bign library
+			by Alan Firminger
+			version 2  May 2012   */
+
+#define PREC 20
+#define FRAC ( PREC - 2 )
+#define SIGNED 1
+
+void help ( ) ;
+
+#include "bign.lib"
+
+int main ( )
+{ big_n x , y ;			/* define two big numbers, x and y */
+  int c = 'b' ;			/* control variable, initialised to 'begin' */
+  puts ( "\ntinybn , small big calculator, a demo for the bign library\n" ) ;
+  help ( ) ;
+  while ( 1 )
+  {	/****	obey an admin command	****/
+    if ( c > 64 ) switch ( c )
+    { case 'h' : help ( ) ; break ; 
+      case 'q' : return 0 ; }
+	/****	enter a value into y		****/
+    if ( c == 'b' )
+    { puts ( "\tenter a start value into the accumulator" ) ;
+      kb_2_big ( y ) ; }
+	/****	enter into x , operate and display new y	****/
+    if ( c < 64 )
+    { kb_2_big ( x ) ;
+      switch ( c )
+      { case '+' : add_big ( x , y , y ) ; break ;
+	case '-' : sub_big ( x , y , y ) ; break ;
+	case '*' : mult_big ( x , y , y ) ; break ;
+	case '/' : div_big ( x , y , y ) ; break ; }
+      cn_( y ) ; }
+	/****	get a command		****/
+    printf ( "\tkey in one of + - * / b h or q , and follow with [ cr ]\n" ) ;
+    fflush ( stdin ) ; do c = getchar( ) ; while ( c == 10 ) ;
+    if ( c < 10 ) c |= 32 ;
+    } }
+
+void help ( )
+{ puts ( "\ttouch a command key then [ return ]\n"
+   "\tthen enter a big number up to 80 characters\n"
+   "\n\tcommands are + - * / Begin Help Quit\n"
+   "\toptionally preceded by 0x for hex input\n"
+   "\tthe entry may contain a decimal point\n" ) ; }
+</table>
+<h2>bigcalc.c</h2>
+<p><tt>bigcalc.c</tt> is my testbed and demonstrator for all aspects of the
+ library. It has been at the heart of this work. You need to get it running
+ so that you can explore things you don't quite understand or trust.
+<p><tt>bigcalc</tt> looks like a calculator for big numbers. My intention is
+ that every command is a single key depression, and the display will appear
+ stable with the contents changeing. So I want cursor control using the
+ console interfaces.
+<p>Open <tt>bigcalc.c</tt> in your editor. If you are working in MS_DOS, or
+ have available conio.h or ncurses then scroll down to line 50 where you will
+ see :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>code in bigcalc.c<td>for use with
+<tr><td>#if 0<br>#include "coniface.h" &nbsp;
+<br>#include "dosface.h"<br>#include "ncurface.h"<br>#endif
+<td>&nbsp;<br>conio.h &nbsp;<br>MS-DOS<br>ncurses<br>&nbsp;
+</table>
+<p>These are the available console interface files. Move the line relevant to
+ your system above the <tt>#if 0</tt>&nbsp;, so that it is active. Include
+ no more than one interface file.
+<p>Then compile.
+<p>I use ncurses in Ubuntu, it requires the compile command :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>gcc -lncurses bigcalc.c -o bigcalc</table>
+<p>If the previous suggestions are not useful, and if your compiler
+ takes characters using <tt>getchar</tt> requiring a <tt>cr</tt> after each
+ entry, then you may get half a solution by :
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>leave all the #include *.h inactive
+<br>before #include "bign.lib" , insert
+<br>&nbsp;<br>#define GET_CHE getche()
+<br>#define GET_CH getch()
+<br>&nbsp;<br>and compile as C++ , probably renaming the file to bigcalc.cpp
+</table>
+<p>This will not stop the calculator scrolling at each operation, but
+ it will give one key operation.
+<p>If none of the above work then be sure that no console interfaces, at line
+52 , are active. Compile as C . When you press a key you may have to follow
+that with a <tt>cr</tt>&nbsp;. The display will scroll. I get a lot of trouble
+ with <nobr><tt>getchar ( ) ;</tt></nobr> ; if your compilation without a
+ console interface does not show the key map starting at page 1 then search in
+ <tt>bign.lib</tt> for : <tt>**/</tt>&nbsp;. This takes you to the initial
+ values for the control variables, you can adjust from <tt>1</tt>&nbsp;. 
+<h2>fin</h2>
+<p>When <tt>bigcalc</tt> is working then you are able to decide how to progress
+ and study the library in your own way. See the code of
+ <tt>bigcalc.c</tt>&nbsp;, notice the list of all keys and their commands and
+ understand how you can insert your own commands on the capital letters keys.
+<p>All good wishes to you. If you find anything wrong please report it,
+ preferably on the <tt>SourceForge</tt> discussion board for the <tt>bign</tt>
+ project.
+<p>If you don't enjoy yourself doing this please tell me why.
+<p align="right">Alan Firminger<br>August 2011<br>revised May 2012
+<h1>&nbsp;</h1>
+</html>

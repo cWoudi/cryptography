@@ -1,0 +1,2657 @@
+<head><title>bign user document 1.02.03</title>
+
+<style type="text/css"><!--
+h1 {margin-bottom: 0em;}
+h4 {margin-top: 0em;}
+table.t td,table.t p, tt {font-family: courier new, courier, serif; font-size: 12pt;}
+table.s, h1, h2, h3, h4, p, ul
+     {font-family: "times new roman", serif; background-color: #FDFDF6;}
+p, ul {font-size: 12pt; margin-top: 0px; margin-bottom: 0.5em;}
+pre {margin-top: 0em;}
+table {margin-top: 10px; margin-bottom: 1em; background-color: #FFFFF8;}
+td {padding-left: 10px; padding-right: 10px; line-height: 1.1em;}
+td {padding: 10px; line-height: 1.1em;}
+p.u, table.u p
+	{margin: 0px 0px 0.2em; padding: 0px; border-style: none; background-color: #FDFDF6;}
+.u td {margin 0px; padding: 0px; vertical-align: bottom; background-color: #FDFDF6;}
+h2, h3 {text-indent: 0em; margin: 0.5em 0em 0em;}
+.z {font-family: courier new, courier, serif;}
+
+a:link, a:visited {text-decoration: none; color: #C00000;}
+a:active {color: #FF0000;} 
+a:link.l, a:active.l {text-decoration: underline; color: #0000FF;}
+a:visited.l {text-decoration: underline; color: #880088;}
+ --></style>
+
+<!--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --->
+<body leftmargin=20 rightmargin=20 bgcolor=#FDFDF6>
+<h1 align="center">bign 1.05.- user document</h1>
+<h4 align="center">document version 1.02.03 &nbsp;
+ Alan Firminger &nbsp; May 2013</h4>
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#intr0" name="intr1">introduction</a>
+<td class="u" align="right"><a href="#contents">contents</a></table>
+<p>This document, for the <tt>bign</tt> library defines the library and details
+ how to use it.
+<p>The library contains all that I wish to provide. I will do no work further on
+ this.
+<p>If here something is wrong then please open a forum thread.
+<p>The <a href="#coni1" name="coni0">console interfaces</a>
+ are available at a separate SF site,
+<a class="l" target="CI" href="http://sourceforge.net/projects/consint/files/">here</a>.
+<p>How to get started is described in
+ <a class="l" href="bnstart.html">bign start document</a> .
+<p>Informative links are <a href="#link" name="link">ruddy words</a> . They form
+ rings through the document. Within each section only the first appearance of a
+ target word is linked.
+<p>Undocumented features may change or disappear silently. Undocumented
+ functions may be dangerous.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#sum1" name="sum0">summary</a></table>
+<p><tt>bign</tt> is a C library for arithmetic processing of big binary numbers
+ contained in arrays.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#use0" name="use1">use</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The material described is Open Source Software. Anyone may use or
+ modify the code and redistribute in its original or modified form.
+<p>All my code remains my copyright, I require that my code and any
+ other authors' revisions are acknowledged through any generations of
+ distribution.
+<p>There is no contract between us, should a user of the bign library
+ suffer any loss then I am not liable. 
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#per0" name="per1">project and personal</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Several websites offer the <tt>bign.tar</tt> for download. Perhaps you
+ obtained yours at one of these. I am flattered.
+<p>If you did not obtain your copy from SourceForge files page then I
+ suggest that you visit <a class="l" target="bn"
+ href="http://sourceforge.net/projects/bignlibacbignum/files/">
+http://sourceforge.net/projects/bignlibacbignum/files/</a> to see my files on
+ offer and occasional revisions.
+<p>bign has been on SourceForge for four years, more than 1,500 have been
+ downloaded. I suggest all users consider the <a class="l"
+ href="http://sourceforge.net/p/bignlibacbignum/discussion/965554">forum</a> ,
+ no-one has posted anything. I will try to keep in touch.
+<p>If anyone publishes anything strictly relevant, on SF or elsewhere, I would
+ like to link to it. Please tell me.
+<p>If anyone wishes to develop this material further then I suggest that you
+ open a site on SF and drive it as you wish. This material is open
+ source, you cannot undo that. Please tell me of any development.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a name="contents">contents</a></table>
+<p align="center">
+<table class="s" width =90%><tr>
+<td valign="top">
+<p><a href="#intr1" name="intr0">introduction</a></p>
+<ul><p><a href="#sum0" name="sum1">summary</a>
+<br><a href="#use1" name="use0">use</a></p></ul>
+<br><a href="#per1" name="per0">personal</a></p></ul>
+<p>contents
+<p><a href="#rev1" name="rev0">revisions</a>
+<p><a href="#fil1" name="fil0">files provided</a></p>
+<ul><p><tt><a href="#bli2" name="bli0">bign.lib</a></tt> &nbsp;
+ <a href="#bli1TT">next</a></p></ul>
+<p><a href="#stdu1" name="stdu0">standards used</a>
+<p><a href="#comp1" name="comp0">compilation</a>
+<ul><p><a href="#nused1" name="nused0">reserved words</a>
+<p><a href="#leqi2" name="leqi0">data types</a>
+ &nbsp; <a href="#leqi1">next</a>
+<p><a href="#glob1" name="glob0">global variables</a></p></ul>
+<p><a href="#filo1" name="filo0">order of files</a>
+<p><a href="#compi3" name="compi0">control of compilation</a>
+ &nbsp; <a href="#compi1">next</a>
+<ul><p><tt><a href="#pr3" name="pr0">PREC</a></tt> and
+ <tt><a href="#fr4" name="fr0">FRAC</a></tt>
+<br>&nbsp; next <tt><a href="#pr1">PREC</a> <a href="#fr1">FRAC</a></tt>
+<p><tt><a href="#ssz5" name="ssz0">SOFT_SIZE</a></tt> ,
+ <tt><a href="#spr3" name="spr0">S_PREC</a></tt> ,
+ <tt><a href="#sfr3" name="sfr0">S_FRAC</a></tt>
+<br> &nbsp; next <tt><a href="#ssz1">SOFT_SIZE</a></tt> ,
+ <tt><a href="#spr1">S_PREC</a></tt> ,
+ <tt><a href="#sfr1">S_FRAC</a></tt>
+<p><tt><a href="#ush5" name="ush0TT">USE_HEAP</a></tt> &nbsp;
+ <a href="#ush1">next</a>
+<p><tt><a href="#bro4" name="bro0">B_ROUND</a></tt> &nbsp;
+ <a href="#bro1">next</a>
+<p><tt><a href="#btr3" name="btr0">BIG_TRACE</a></tt>
+ &nbsp; <a href="#btr1">next</a></p></ul>
+<p><a href="#bnum1" name="bnum0">big numbers</a>
+ <!--- this issue only --->	<a href="#bnum1TT">next</a>
+
+<p><tt><a href="#erm4" name="erm0">ERROR_MODE</a></tt>
+ &nbsp; <a href="#erm1">next</a>
+<p><a href="#ari1" name="ari0">arithmetic</a>
+<ul><p><a href="#sta4" name="sta0">standard arithmetic functions</a>
+ &nbsp; <a href="#sta1">next</a>
+<p><a href="#seca1" name="seca0">technical arithmetic functions</a></p></ul>
+<p><a href="#mduf4" name="mduf0">MDUF</a> &nbsp; <a href="#mduf1TT">next</a>
+<p><a href="#tesf2" name="tesf0">test functions</a> <a href="#tesf1TT">next</a>
+						<!--- new column --->
+<td>
+<p><a href="#convio2" name="convio0">conversion, input and output</a>
+ &nbsp; <a href="#convio1">next</a>
+<ul><p><a href="#nel1" name="nel0">natural length</a>
+<p><tt><a href="#nod3" name="nod0">NO_DEC</a></tt> &nbsp;
+ <a href="#nod1">next</a>
+<p><tt><a href="#daj3" name="daj0">BIG_DAJ</a></tt> &nbsp;
+ <a href="#daj1">next</a>
+<p><tt><a href="#numh3" name="numh0">num_here</a></tt>
+ &nbsp; <a href="#numh1">next</a>
+<p><a href="#iomac1" name="iomac0">input and output argument macros</a>
+<p><tt><a href="#bin3" name="bin0">big_in</a></tt>
+ &nbsp; <a href="#bin1">next</a>
+<p><a href="#inmac1" name="inmac0">input call macros</a>
+<p><tt><a href="#bigo3" name="bigo0">big_out</a></tt>
+ &nbsp; <a href="#bigo1">next</a>
+<p><a href="#omac1" name="omac0">output macros</a>
+<p><a href="#bma1" name="bma0">b_mark</a>
+<p><a href="#ben1" name="ben0">b_end</a>
+<p><a href="#cinp2" name="cinp0">console input</a>
+ &nbsp; <a href="#cinp1">next</a>
+<p><a href="#ciwi1" name="ciwi0">console input without a console interface</a>
+<p><a href="#bitsh3" name="bitsh0"><tt>bit_show</tt> and <tt>bits_out</tt></a>
+ &nbsp; <a href="#bitsh1">next</a></p></ul>
+<p><tt><a href="#bcalc2" name="bcalc0">bigcalc.c</a></tt>
+ &nbsp; <a href="#bcalc1TT">next</a>
+<p><a href="#coni5" name="coni1">console interface</a>
+ &nbsp; <a href="#coni2TT">next</a>
+<ul><p><a href="#ncurf4" name="ncurf0"><tt>ncurface.h</tt></a>
+ &nbsp; <a href="#ncurf1">next</a></p></ul>
+<p><tt><a href="#bacc5" name="bacc0">big_acc.lib</a></tt>
+ &nbsp; <a href="#bacc1TT">next</a>
+<p><tt><a href="#root3" name="root0">big_root.lib</a></tt>
+ &nbsp; <a href="#root1">next</a>
+<p><tt><a href="#blog5" name="blog0">biglog.lib</a></tt>
+ &nbsp; <a href="#blog1TT">next</a>
+<ul><p><tt><a href="#e2x3" name="e2x0">e_2_x</a></tt>
+ &nbsp; <a href="#e2x1">next</a>
+<p><tt><a href="#log3" name="log0">log_e</a></tt>
+ &nbsp; <a href="#log1TT">next</a>
+<p><tt><a href="#e9" name="e0">big_e</a></tt> &nbsp;
+ <a href="#e1">next</a></p></ul>
+<p><tt><a href="#blig5" name="blig0">bigtrig.lib</a></tt>
+ &nbsp; <a href="#blig1TT">next</a>
+<ul><p><a href="#fwdt2" name="fwdt0">forward trig functions</a> &nbsp;
+ <a href="#fwdt1">next</a>
+<p><a href="#invt2" name="invt0">inverse trig functions</a> &nbsp;
+ <a href="#invt1">next</a>
+<p><tt><a href="#pi8" name="pi0">pion840</a></tt> and
+ <tt><a href="#pimem3" name="pimem0">pi_mem</a></tt>
+<br>&nbsp; next
+ <tt><a href="#pi1TT">pion840<a> <a href="#pimem1TT">pi_mem</a></tt>
+<p><tt><a href="#t17" name="t10">limit_one</a></tt> &nbsp;
+ <a href="#t11">next</a></p></ul>
+</table></p>
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#rev0" name="rev1">revisions</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>In this document :
+<ul><p>this section is more sensibly named
+<p>previously throughout I used the term 'long' meaning <tt>long</tt> or
+ <tt>long long</tt> as required by the compiler. I have changed this ruthlessly
+ to <tt><a href="#blon0" name="blon0TT">blong</a></tt> , with the
+ <tt>unsigned</tt> changed to
+ <tt><a href="#ublon0" name="ublon0TT">ublong</a></tt>
+<p>in <tt><a href="#pimem1" name="pimem1TT">pi_mem</a></tt> I wrongly used the
+ term denominator, now corrected to numerator
+<p>The table in <a href="#tesf1" name="tesf1TT">test functions</a> gave
+ <tt><a href="#mssb0TT" name="mssb0">mssb</a></tt> and
+ <tt><a href="#obit0TT" name="obit0">overbit</a></tt>
+ the wrong type. They are both <tt>blong</tt>
+<p><tt><a href="#mduf1" name="mduf1TT">MDUF</a></tt> was unlinked, corrected.
+<p>links for <a href="#coni2" name="coni2TT">console interface</a>
+ were faulty, corrected
+<p><tt><a href="#kb20TT" name="kb20">kb_2_big</a></tt> returns <tt>-1</tt>
+ on <tt>Esc</tt> , not <tt>1</tt> as erroneously reported before
+<p>under <a href="#bnum1" name="bnum1TT">big numbers</a> a table describing the
+ effects of <tt><a href="#ush0TT" name="ush0">USE_HEAP</a></tt>
+ had the part for undefined wrongly labelled defined</ul>
+<p>In bnstart.html, in macro definitions I made minor revisions to the test.
+<p>In <tt><a href="#bli1" name="bli1TT">bign.lib</a></tt>
+<ul><p>strategies for functions and groups of functions are better commented
+<p>in the function <tt>bncp_abs</tt> the initial code has been a
+ little shortened, I cannot remember why I bothered.</ul>
+<p>In <tt><a href="#blog1" name="blog1TT">biglog.lib</a></tt>, which is within
+ the file <tt><a href="#bacc1" name="bacc1TT">big_acc.lib</a></tt>, the
+ function <tt><a href="#log1" name="log1TT">log_e</a></tt> was faulty. The
+ source is normalised to a sweet zone, values that are equal and slightly larger
+ than <nobr><tt>1 / e <sup>n</sup></tt> , <tt>n</tt></nobr> is a positive
+ integer greater than <tt>0</tt>&nbsp;, failed to be given a negative
+ logarithm. This is corrected. My apology if you have obtained faulty results
+ because of this.
+<p>In <tt><a href="#blig1" name="blig1TT">bigtrig.lib</a></tt>, which is which
+ is within <tt>big_acc.lib</tt>, the inverse functions, that is
+ <tt><a href="#bitan0TT" name="bitan0">b_inv_tan</a></tt>&nbsp;,
+<tt><a href="#bisin0TT" name="bisin0">b_inv_sin</a></tt> and
+ <tt><a href="#bicos0TT" name="bicos0">b_inv_cos</a></tt>&nbsp;, all
+ showed faulty layout of trace output when used
+ with <tt>USE_HEAP</tt> undefined. This is corrected.
+<p>In <tt><a href="#bcalc1" name="bcalc1TT">bigcalc</a></tt>
+<ul><p>with no console interface the details of compilation and current
+ control values, obtained from key '?' could not be read, fixed
+<p>the layout from the tests' answers were improved from baby's first try,
+<p>the tests' result from key 't' now includes the obverse of
+ <tt><a href="#cpabs0TT" name="cpabs0">cp_abs</a></tt>
+<p>new keys and revisions are&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>key<td>effect<td>comment
+<tr><td align="center">w<br>k<br>7
+<td>x = e<br>y = pi<br>y = pion840 ( i )
+<td>new<br>was y = <a href="#pi1" name="pi1TT">pion840 ( i )</a>
+<br>moved from 'k'
+</table></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#fil0" name="fil1">files provided</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The <tt>bign 1</tt> suite comprises :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>file<td>version<td>bytes<td>use<td>notes
+<tr><td><a href="#bus0" name="bus1">buserdoc.html</a><!--- link only to rev --->
+<br><a class="l" href="bnstart.html">bnstart.html</a>
+<br><a href="#bli2" name="bli1">bign.lib</a>
+<br><a href="#bacc2" name="bacc1">big_acc.lib</a>
+<br><a href="#bcalc2" name="bcalc1">bigcalc.c</a>
+<br><a href="#conih1" name="conih0">coniface.h</a>
+<br><a href="#dosfh1" name="dosfh0">dosface.h</a>
+<br><a href="#ncurf2" name="ncurf1">ncurface.h</a>
+<br><a href="#e2" name="e1">big_e.txt</a>
+<br><a href="#mke1" name="mke0">make_e.c</a>
+<br><a href="#pin1" name="pin0">pix.txt</a>
+<br><a href="#mpi1" name="mpi0">make_pi.c</a>
+<br><a class="l" target="bignrev" href="bignrev.html">bignrev.html</a>
+<td>1.02.03<br>1.3<br>1.05.03<br>10<br>2.03<br>1.02<br>1.03<br>1.0
+<br>&nbsp;<br>1.02<br>&nbsp;<br>3.0<br>16
+<td align="right">137147<br>17441<br>83240<br>25889<br>27941<br>1111
+<br>2573<br>3216<br>65943<br>3360<br>66033<br>5335<br>18673
+<td>definition and use
+<br>bign start document
+<br>code for big number arithmetic
+<br>accessories<br>testbed and demonstrator
+<br><a href="#coni3" name="coni2">console interface</a> with conio.h
+<br>&nbsp; ~ interface with MSDOS<br>&nbsp; ~ interface with ncurses
+<br>e , needed for <a href="#blog2" name="blog1">biglog.lib</a>
+<br>makes e
+<br>pi as hex, for <a href="#blig2" name="blig1">bigtrig.lib</a>
+<br>makes pix.txt<br><nobr>details revisions in these files</nobr>
+<td align="center">
+.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>1<br>.<br>1<br>1
+</table>
+<p>The notes are :</p>
+<ul><p>1 &nbsp; these files are not described herein, see inside the
+ files</p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><tt><h3 class="z"><a href="#bli3" name="bli2">bign.lib</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>This file provides :</p>
+<ul>a header section :</p>
+<ul><p>ten blank lines for the user to insert standing macro defines
+<br>selects the <a href="#leqi2" name="leqi1">types</a> to use
+<br>sets constants consequent from the types chosen
+<br>gives typedefines
+<br>sets constants consequent and from the user's
+ <a href="#compi2" name="compi1">control of compilation</a>
+<br>default macro definitions</ul>
+<p>a body containing functions for :</p>
+<ul><p><a href="#sta2" name="sta1">standard arithmetic</a>
+<br><a href="#tesf2" name="tesf1">testing</a>
+<br><a href="#convio2" name="convio1">conversion, input and output</a>
+<br>if required, action on error<br>if required, a heap taker</ul>
+</ul><p>If required the user may copy out the header to make
+ <tt><a href="#bignh1" name="bignh0">bign.h</a></tt>&nbsp;.
+<p>Each part, the header and the body, of <tt>bign.lib</tt> are protected
+ against multiple inclusions.
+<p>To assist readability the file is marked with section headings. These are
+ listed separately in <tt>bnheads.txt</tt>&nbsp;.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#stdu2" name="stdu1">standards used</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The contraction int refers to a C int&nbsp;. Integer is used as
+ a mathematical term.
+<p>This list of names is standard throughout the library. Not all are
+ used herein, and some others which I hope are easilly read are used
+ in the code.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>resolved type of expression<td>my usage
+<tr><td>pointers to big numbers<br>int<br>unsigned int
+<br>character<br>int character<br><a href="#blon1" name="blon0TT">blong</a>
+<br><a href="#ublon1" name="ublon0TT">ublong</a>
+<br>pointer to within big<br>int giving size<br>int array counters
+<br>stream, FILE *<br>structure<br>string
+<br>character array pointer<br>code
+<td>w , x , y , z<br>i<br>u<br>ch<br>ich<br>li , lh<br>ul , lu
+<br>p , q<br>sz<br>m , n<br>sm<br>sc<br>sg<br>q<br>A , B</table>
+<p>The active code adjusts itself for compilers working with <tt>long</tt>
+ or <tt>long long</tt> data types. This is done using the
+ <tt>typedef blong</tt> and <tt>typedef ublong</tt>&nbsp;. The typedefs
+ are used throughout the documentation.
+ <p>Throughout the parameterised macro below adapts for the bit length of the
+ <a href="#bele1" name="bele0">element</a> used in the big number array. This
+ reduces to the first argument for 16 bit elements and the second for 32 bit
+ elements. This is&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td><a href="#esz1" name="esz0">E_SZ( A , B )</a></table>
+<p>lsb is the least significant bit. The <nobr>symbol :</nobr> marks the end of
+ a number, so numbers to the right of this are underflow. b is an undefined bit.
+ <nobr>... means</nobr> the same continued. The bottom of an answer and its
+ underflow may be described as <nobr>... b lsb : b bbb ... ,</nobr> although
+ <nobr>... b : b ...</nobr> is better.
+<p>u-f is underflow, o-f is overflow. Integer part is i-p and fraction part
+ is <nobr>f-p .</nobr>
+<p>Unless forced by C, ambiguity between <tt>0</tt> , <tt>O</tt> , <tt>1</tt>
+ and <tt>l</tt> is avoided by two rules :
+<ul>number is the default<br>an ambiguous character adjacent to a letter
+ is a letter</ul>
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#comp0" name="comp1">compilation</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The library is written for ANSI C89 , equal to ISO C90 .
+<p>If the compiler has it available then the <tt>long long</tt> data type is
+ used, as defined in C99&nbsp;.
+<p>The bign routines have no need for floating point, but
+ <a href="#mpi2" name="mpi1">make_pi</a>
+ and <a href="#mke2" name="mke1">make_e</a>
+ both include <tt>time.h</tt> which may use floating point as a type.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#nused0" name="nused1">reserved words</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Throughout the library private names begin with BN or bn . The user
+ must not use either of those couplets to start any new name.
+<p>These names are for public use. How is described herein. They are
+ otherwise reserved.
+
+<p align="center"><table class="t" width=90%><tr valign="top">
+<td>
+<p><a href="#Aora1" name="Aora0">A_a</a>
+<p><a href="#aob1" name="aob0">a_obitdif</a>
+<p><a href="#addb1" name="addb0">add_big</a>
+<p><a href="#addi1" name="addi0">add_int</a>
+<p><a href="#addli1" name="addli0">add_li</a>
+<p><a href="#addlp1" name="addlp0">add_li_place</a>
+<p><a href="#bicos1" name="bicos0TT">b_inv_cos</a>
+<p><a href="#bisin1" name="bisin0TT">b_inv_sin</a>
+<p><a href="#bitan1" name="bitan0TT">b_inv_tan</a>
+<p><a href="#bpe1" name="bpe0">B_P_E</a>
+<p><a href="#bro2" name="bro1">B_ROUND</a>
+<p><a href="#baksp1" name="baksp0">BACK_SP</a>
+<p><a href="#bel1" name="bel0">bele</a>
+<p><a href="#bb01" name="bb00">BIG_B_0</a>
+<p><a href="#bbp1" name="bbp0">BIG_B_POINT</a>
+<p><a href="#bcos1" name="bcos0">big_cos</a>
+<p><a href="#daj2" name="daj1">BIG_DAJ</a>
+<p><a href="#e3" name="e2">big_e</a>
+<p><a href="#bien1" name="bien0">BIG_END</a>
+<p><a href="#bgr1" name="bgr0">BIG_GROUP</a>
+<p><a href="#bin2" name="bin1">big_in</a>
+<p><a href="#bmk1" name="bmk0">BIG_MARK</a>
+<p><a href="#bigo2" name="bigo1">big_out</a>
+<p><a href="#root2" name="root1">big_root</a>
+<p><a href="#bshif2" name="bshif1">big_shift</a>
+<p><a href="#bsin1" name="bsin0">big_sin</a>
+<p><a href="#btr2" name="btr1">BIG_TRACE</a>
+<p><a href="#bign1" name="bign0">bign</a>
+<p><a href="#bitsh2" name="bitsh1">bit_show</a>
+<p><a href="#bitsh2">bits_out</a>
+<p><a href="#blon2" name="blon1">blong</a>
+<td>
+<p><a href="#bnhp1" name="bnhp0">BN_HEAP_</a>
+<p><a href="#bndo1" name="bndo0">bndo0_</a>
+<p><a href="#bnno1" name="bnno0">BNNONL</a>
+<p><a href="#bnxi1" name="bnxi0">BNXICH</a>
+<p><a href="#bnxp1" name="bnxp0">BNXPE</a>
+<p><a href="#bodef1" name="bodef0">BOD_DEF</a>
+<p><a href="#bype1" name="bype0">BY_P_E</a>
+<p><a href="#c2_1" name="c2_0">c2_</a>
+<p><a href="#cle1" name="cle0">CLEOL</a>
+<p><a href="#cllw1" name="cllw0">CLLOW</a>
+<p><a href="#cls1" name="cls0">CLS</a>
+<p><a href="#cn_1" name="cn_0">cn_</a>
+<p><a href="#crows1" name="crows0">CON_ROWS</a>
+<p><a href="#cpb1" name="cpb0">copy_big</a>
+<p><a href="#cpabs1" name="cpabs0TT">cp_abs</a>
+<p><a href="#cx_1" name="cx_0">cx_</a>
+<p><a href="#cx2_1" name="cx2_0">cx2_</a>
+<p><a href="#defb1" name="defb0">DEF_BN_</a>
+<p><a href="#divb1" name="divb0">div_big</a>
+<p><a href="#divb41" name="divb40">div_big_4</a>
+<p><a href="#divinto1" name="divinto0">div_bintoi</a>
+<p><a href="#divi1" name="divi0">div_int</a>
+<p><a href="#divi41" name="divi40">div_i_4</a>
+<p><a href="#divli1" name="divli0">div_li</a>
+<p><a href="#divli41" name="divli40">div_li_4</a>
+<p><a href="#divuf1" name="divuf0">divuf</a>
+<p><a href="#dtyp1" name="dtyp0">DTYP</a>
+<p><a href="#e2x2" name="e2x1">e_2_x</a>
+<p><a href="#efil1" name="efil0">E_FILENAME</a>
+<p><a href="#esz2" name="esz1">E_SZ</a>
+<p><a href="#entrk1" name="entrk0">ENTER_K</a>
+<td>
+<p><a href="#erx1" name="erx0">ERR_EX</a>
+<p><a href="#erf2" name="erf1">error_function</a>
+<p><a href="#esm1" name="esm0">ERR_SM</a>
+<p><a href="#erm2" name="erm1">ERROR_MODE</a>
+<p><a href="#fr2" name="fr1">FRAC</a>
+<p><a href="#frch1" name="frch0">FRAC_CHAR</a>
+<p><a href="#freeb1" name="freeb0">FREE_B_</a>
+<p><a href="#freep1" name="freep0">FREE_PI_M</a>
+<p><a href="#getcp1" name="getcp0">GET_C_POS</a>
+<p><a href="#getch1" name="getch0">GET_CH</a>
+<p><a href="#getche1" name="getche0">GET_CHE</a>
+<p><a href="#gete1" name="gete0">get_e</a>
+<p><a href="#hexd1" name="hexd0">HEX_DEF</a>
+<p><a href="#idvb1" name="idvb0">i_div_big</a>
+<p><a href="#iclos1" name="iclos0">ICLOSE</a>
+<p><a href="#iinit1" name="iinit0">IINIT</a>
+<p><a href="#intch1" name="intch0">INT_CHAR</a>
+<p><a href="#kb21" name="kb20TT">kb_2_big</a>
+<p><a href="#kb221" name="kb220">kb_2_big_2</a>
+<p><a href="#kbx1" name="kbx0">KB_CH</a>
+<p><a href="#kbqq1" name="kbqq0">KBQQ</a>
+<p><a href="#l21" name="l20">L2</a>
+<p><a href="#t12" name="t11">limit_one</a>
+<p><a href="#lile1" name="lile0">LINE_LEN</a>
+<p><a href="#log2" name="log1">log_e</a>
+<p><a href="#mduf2" name="mduf1">MDUF</a>
+<p><a href="#mcd1" name="mcd0">MC_DEF</a>
+<p><a href="#mend1" name="mend0">MEND_PART</a>
+<p><a href="#modb1" name="modb0">mod_big</a>
+<p><a href="#mssb1" name="mssb0TT">mssb</a>
+<p><a href="#mulb1" name="mulb0">mult_big</a>
+<td>
+<p><a href="#muli1" name="muli0">mult_int</a>
+<p><a href="#mulli1" name="mulli0">mult_li</a>
+<p><a href="#muluf1" name="muluf0">muluf</a>
+<p><a href="#nln1" name="nln0">NAME_LEN</a>
+<p><a href="#nob1" name="nob0">NO_BELL</a>
+<p><a href="#nod2" name="nod1">NO_DEC</a>
+<p><a href="#nol1" name="nol0">NO_LL</a>
+<p><a href="#ntop1" name="ntop0">ntop</a>
+<p><a href="#numh2" name="numh1">num_here</a>
+<p><a href="#ob_1" name="ob_0">ob_</a>
+<p><a href="#ob2_1" name="ob2_0">ob2_</a>
+<p><a href="#obd1" name="obd0">obitdif</a>
+<p><a href="#obx_1" name="obx_0">obx_</a>
+<p><a href="#obx2_1" name="obx2_0">obx2_</a>
+<p><a href="#om_1" name="om_0">om_</a>
+<p><a href="#om2_1" name="om2_0">om2_</a>
+<p><a href="#omx_1" name="omx_0">omx_</a>
+<p><a href="#omx2_1" name="omx2_0">omx2_</a>
+<p><a href="#outd1" name="outd0">OUT_DEF</a>
+<p><a href="#obit1" name="obit0TT">overbit</a>
+<p><a href="#p2_1" name="p2_0">p2_</a>
+<p><a href="#pif1" name="pif0">PI_FILENAME</a>
+<p><a href="#pimem2" name="pimem1">pi_mem</a>
+<p><a href="#pi2" name="pi1">pion840</a>
+<p><a href="#pr_1" name="pr_0">pr_</a>
+<p><a href="#pr2" name="pr1">PREC</a>
+<p><a href="#px_1" name="px_0">px_</a>
+<p><a href="#px2_1" name="px2_0">px2_</a>
+<p><a href="#qlq1" name="qlq0">QLQ</a>
+<p><a href="#qwq1" name="qwq0">QWQ</a>
+<p><a href="#rdb1" name="rdb0">rawdiv_big_</a>
+<td>
+<p><a href="#radb1" name="radb0">rawadd_big</a>
+<p><a href="#rd41" name="rd40">rawdiv_4_</a>
+<p><a href="#rbintob1" name="rbintob0">rawdivbintoi</a>
+<p><a href="#rid1" name="rid0">rawi_div_</a>
+<p><a href="#rmb1" name="rmb0">rawmod_big_</a>
+<p><a href="#rmulb1" name="rmulb0">rawmult_big</a>
+<p><a href="#rsubb1" name="rsubb0">raw_subbig</a>
+<p><a href="#readln1" name="readln0">READ_LINE</a>
+<p><a href="#readps1" name="readps0">READ_POS</a>
+<p><a href="#rcp1" name="rcp0">RESTORE_C_POS</a>
+<p><a href="#sfr2" name="sfr1">S_FRAC
+<p>s_frac</a>
+<p><a href="#spr2" name="spr1">S_PREC
+<p>s_prec</a>
+<p><a href="#svcp1" name="svcp0">SAVE_C_POS</a>
+<p><a href="#setcp1" name="setcp0">SET_C_POS_</a>
+<p><a href="#sig1" name="sig0">SIGNED</a>
+<p><a href="#sli1" name="sli0">SHO_LEAD_IN</a>
+<p><a href="#sm2b1" name="sm2b0">sm_2_big_</a>
+<p><a href="#sx2b1" name="sx2b0">smx_2_big_</a>
+<p><a href="#ssz2" name="ssz1">SOFT_SIZE</a>
+
+<p><a href="#subb1" name="subb0">sub_big</a>
+<p><a href="#subi1" name="subi0">sub_int</a>
+<p><a href="#trs1" name="trs0">TR_SM</a>
+<p><a href="#ublon2" name="ublon1">ublong</a>
+
+<p><a href="#ush2" name="ush1">USE_HEAP</a>
+<p><a href="#xpo1" name="xpo0">x_pos</a>
+<p><a href="#xxX1" name="xxX0">X_x</a>
+<p><a href="#ypo1" name="ypo0">y_pos</a>
+<p><a href="#zb1" name="zb0">zero_big</a>
+</table>
+
+<p>This document also describes the arguments of function calls by name.
+ These are not listed in the table above because they cannot clash with
+ anything in a user's code.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#leqi0" name="leqi2">data types</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Big numbers are held in arrays. The
+ <a href="#bele2" name="bele1">elements</a> of this array have one half
+ of the precision of a longer type which is used as an accumulator
+ calculating up or down a big number. This longer type is also
+ used for variables that need the precision, such as bit or ascii
+ counting.
+<p>The longest type available in the compiler is used as the accumulator.
+ The type of the array element is chosen to be half the length of the
+ accumulator.
+<p>The code adjusts itself to the longest types available.
+<p>These typedefines are declared and used in the library. They are
+ available to a user for definitions and casting.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>typedef<td colspan>defined to
+<tr><td><a href="#bel0" name="bel1">bele</a>
+<br><a href="#blon3" name="blon2">blong</a>
+<br><a href="#ublon3" name="ublon2">ublong</a>
+<td>array <a href="#bele3" name="bele2">element</a>, unsigned int or
+ unsigned short
+<br>long or long long
+<br>unsigned long or unsigned long long
+</table>
+<p>The combinations of types are shown by this table.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>bit lengths<td colspan=2>data types as
+ <a href="#bele4" name="bele3">element</a>
+ : <a href="#blon4" name="blon3">blong</a>
+<td>maximum array sizes
+<tr><td>16 : 32<td>int : long<td>short : long<td>0x7FFB
+<tr><td>32 : 64<td>int : long<td>int : long long<td>0x7FFFFFFB
+</table>
+<p>When a compiler offers an <tt>int</tt> of precision equal to a
+ <tt>long</tt> then if it is available a <tt>long&nbsp;long</tt>
+ accumulator is used, if it is not available then a <tt>long</tt>
+ accumulator is used with a <tt>short</tt> element. To prevent an
+ available <tt>long&nbsp;long</tt> accumulator, a <tt>short</tt>
+ element with a <tt>long</tt> accumulator may be forced by
+ defining the macro
+ <tt><a href="#nol2" name="nol1">NO_LL</a></tt>&nbsp;.
+<p>These macro definitions are used in the library, they are
+ available to the user.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>use
+<tr><td><a href="#bpe2" name="bpe1">B_P_E</a>
+<br><a href="#bype0" name="bype1">BY_P_E</a>
+<br><a href="#dtyp0" name="dtyp1">DTYP</a><br><br>
+<br><a href="#l20" name="l21">L2( A )</a><br>
+<br><a href="#esz3" name="esz2">E_SZ( A , B )</a>
+<br><a href="#qlq0" name="qlq1">QLQ</a><br>&nbsp;
+<br><a href="#qwq0" name="qwq1">QWQ</a>
+<td>bits per <a href="#bele5" name="bele4">element</a>, 16 or 32<br>bytes
+ per element, 2 or 4
+<br>0 &nbsp; int : long<br>1 &nbsp; short : long
+<br>2 &nbsp; int : long long<br>A ## L or A ## LL
+<br>A will be a numeric constant
+<br>for a 16 bit element ( A ) , for 32 bit ( B )
+<br>depending on the type of <a href="#blon5" name="blon4">blong</a> "l" or "ll"
+<br>to be concatenated into format strings, see below
+<br>within quotes, the hex digits per blong, 8 or 16, see below
+</table>
+<p>Below I use the term <a href="#bele6" name="bele5">element</a>
+ to refer to a big number array element, either an int or a short. I use
+ the term <tt><a href="#blon6" name="blon5">blong</a></tt> and
+ <tt><a href="#ublon4" name="ublon3">ublong</a></tt> to refer
+ to the signed or unsigned long or long long types that the library offers
+ a user.
+<p>As code examples, with independance of the compiler used, to define, use
+ and output the value of blong length variables a code fragment may be :</p>
+<ul><tt>blong l ; ublong ul ;<br>l = L2( 5 ) ; ul = L2( 7U ) ;
+<br>printf ( "l is %" QWQ QLQ "d\nand ul is %" QWQ QLQ "u " , l , ul )</tt></ul>
+<p>A big number is defined <tt>big_n</tt> , described below.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#glob0" name="glob1">global variables</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Depending on compilation, there may be one or two global variables declared
+ in <tt><a href="#bli4" name="bli3">bign.lib</a></tt>&nbsp;.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>constant<td>type<td>condition<td>content
+<tr>
+<td><a href="#spr3" name="spr2">S_PREC</a>
+<br><a href="#sfr3" name="sfr2">S_FRAC</a><br>
+<td>int<br>int
+<td><a href="#ssz3" name="ssz2">SOFT_SIZE</a> defined
+<br><nobr>( <a href="#fr3" name="fr2">FRAC</a> > 0 ) and SOFT_SIZE
+ defined</nobr>
+<td><nobr>variable precision</nobr><br>variable f-p
+</table>
+<p>There is no provision for labelling these <tt>extern</tt> for linking
+ multipart compilation.
+<p>The accessories, delivered in
+ <tt><a href="#bacc3" name="bacc2">big_acc.lib</a></tt>&nbsp;:
+ <tt><a href="#blog3" name="blog2">biglog.lib</a></tt> and
+ <tt><a href="#blig3" name="blig2">bigtrig.lib</a></tt> add global variables
+ also.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#filo0" name="filo1">order of files</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Files have to be included by the user. The order of this has to be as defined
+ in this section.
+<p>Using <tt><a href="#bli5" name="bli4">bign.lib</a></tt>
+ as delivered the simplest program order is :
+<ul><p>
+<td>user defines to <a href="#compi3" name="compi2">control the compilation</a>
+<br>include <a href="#coni4" name="coni3">console interface</a> file, as and if
+ required
+<br>include <tt><a href="#bli6" name="bli5">bign.lib</a></tt>
+<br>include <tt><a href="#bacc4" name="bacc3">big_acc.lib</a></tt> or
+ accessories taken from this as and if required
+<br>user's code</p></ul>
+<p>In <tt><a href="#bli7" name="bli6">bign.lib</a></tt>
+ the break from header to body is identified with a dotted line.  If desired,
+ cut and save above the dotted line to
+ <tt><a href="#bignh2" name="bignh1">bign.h</a></tt>&nbsp;. If that is done
+ <tt>bign.lib</tt> as delivered may be included later. The same may be done
+ with the accessory files.<p>Using these <tt>.h</tt> files the order must be
+ as here :
+<ul><p>
+<p>user definitions
+<br>include console interface file, as and if
+ required
+<br>include <tt><a href="#bignh0" name="bignh2">bign.h</a></tt>
+<br>include the required accessory <tt>.h</tt> files in any order
+<br>the user's code
+<br>include the <tt>.lib</tt> files in any order</p></ul>
+<p>The <tt>bign.h</tt> includes
+ these files within <tt>&lt;&nbsp;&gt;</tt>&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>file<tr><td>stdio.h<br>stdlib.h</table>
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#compi4" name="compi3">control of compilation</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The library is controlled by macros defined by the user prior to including
+ <nobr><tt><a href="#bli8" name="bli7">bign.lib</a>
+ ( or .h )</tt> .</nobr> All of these have default conditions
+ that will produce effective big number executable, but a user should expect to
+ change some of these from their defaults by providing definitions. These macros
+ are listed below and described in detail later.
+<p>Ten lines are provided near the top of
+ <tt><a href="#bli9" name="bli8">bign.lib</a></tt> available to a user
+ to enter definitions that will be required in every compilation by that user
+ using that file.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>default<td>controls
+<tr><td><a href="#pr3" name="pr2">PREC</a>
+<br><a href="#fr4" name="fr3">FRAC</a>
+<br><a href="#sig2" name="sig1">SIGNED</a>
+<br><a href="#nol0" name="nol2">NO_LL</a>
+<br><a href="#ssz5" name="ssz3">SOFT_SIZE</a>
+<br><a href="#ush3" name="ush2">USE_HEAP</a><br>&nbsp;
+<br><a href="#bro3" name="bro2">B_ROUND</a>
+<br><a href="#mduf3" name="mduf2">MDUF</a>
+<br><a href="#erm3" name="erm2">ERROR_MODE</a>
+<br><a href="#esm2" name="esm1">ERR_SM</a>
+<br><a href="#erx2" name="erx1">ERR_EX</a>
+<br><a href="#btr3" name="btr2">BIG_TRACE</a>
+<br><a href="#trs2" name="trs1">TR_SM</a><br>
+<br><a href="#nod3" name="nod2">NO_DEC</a>
+<br><a href="#daj3" name="daj2">BIG_DAJ</a>
+<br><a href="#kbx2" name="kbx1">KB_CH</a>
+<br><a href="#nln2" name="nln1">NAME_LEN</a>
+<br><a href="#bmk2" name="bmk1">BIG_MARK</a>
+<br><a href="#bien2" name="bien1">BIG_END</a>
+<br><a href="#lile2" name="lile1">LINE_LEN</a>
+<br><a href="#bgr2" name="bgr1">BIG_GROUP</a>
+<br><a href="#bnno2" name="bnno1">BNNONL</a>
+<br><a href="#sli2" name="sli1">SHO_LEAD_IN</a>
+<br><a href="#nob2" name="nob1">NO_BELL</a>
+<br><a href="#bb02" name="bb01">BIG_B_0</a>
+<br><a href="#bbp2" name="bbp1">BIG_B_POINT</a>
+<br><a href="#xxX2" name="xxX1">X_x</a>
+<br><a href="#Aora2" name="Aora1">A_a</a>
+<br><a href="#crows2" name="crows1">CON_ROWS</a>
+<td>4<br>0<br>1<br>undefined<br>undefined
+<br>undefined<br>&nbsp;<br>0<br>undefined<br>3<br>stdout<br>( -1 )
+<br>undefined<br>stdout<br><br>undefined<br>1<br>see below
+<br>10<br>':'<br>','<br>80<br>10<br>undefined<br>undefined
+<br>undefined<br>'.'<br>" ' "<br>"0x "<br>'A'<br>24
+<td>sets the overall precision<br>sets the length of the f-p
+<br>provides unsigned or signed arithmetic
+<br>instead of int : long long, forces short : long types
+<br>for software control of big number sizes
+<br>puts scratchpad memory on the heap
+<br>and allows users to define big numbers on the heap
+<br>binary rounding in arithmetic
+<br><nobr>sets a size of u-f in multiply and divide and enables
+ active control</nobr> 
+<br>choice of error response
+<br>stream for error response output
+<br>error return value
+<br>functions produce a trace, to TR_SM ( below )
+<br>stream for trace output and<br>characters passed in file search
+<br>non inclusion of decimal conversion
+<br><nobr>prevents creep of imprecise decimal conversions</nobr>
+<br>defines total number of characters to input
+<br>length of label for number output
+<br>machine readable start token for number output
+<br>machine readable terminator for number output
+<br>length of line for a number for number input and output
+<br>number of digits in a group in macro output
+<br>inhibits newline after readable output
+<br>copies file to <a href="#trs3" name="trs2">TR_SM</a> while
+ searching for a number
+<br>inhibition of bell<br>binary output zero character
+<br>binary output point<br>3 characters, 0x & space<br>case for 0x A to F
+<br>default number of character rows on the console
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#pr4" name="pr3">PREC</a>
+ and <a href="#fr5" name="fr4">FRAC</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p><tt>PREC</tt> is a macro constant that sets the precision of big numbers as
+ <a href="#bele7" name="bele6">elements</a> in the big number array. It has a
+ minimum value of <tt>4</tt>&nbsp;.
+<p>The maximum value for <tt>PREC</tt> is dependant on the system used. It
+ must be less than <tt>INT_MAX</tt> by two memory units. With increase of
+ compiler precision then addressability of a number array sets the maximum
+ size.
+<p>In almost every compilation size will be defined by the user to a number.
+<p><tt>FRAC</tt> is a similar macro constant that sets the size of the
+ fraction-part of the big numbers, in elements. It may have a minimum value of
+ <tt>0</tt> and a maximum of <nobr><tt>( PREC - 1 )</tt> .</nobr>
+<p>The i-p of the big numbers have a precision of
+ <nobr><tt>( PREC - FRAC )</tt> elements.</nobr>
+<p>If <tt>FRAC</tt> is defined to <tt>0</tt> then integer mathematics are
+ compiled throughout.
+<p>If <tt>FRAC</tt> is not defined by the user then the library defines it
+ to <tt>0</tt>&nbsp;, and integer maths are compiled.
+<p><tt>PREC</tt> , and if it is defined to greater than <tt>0 FRAC</tt> , are
+ used for the purposes where a constant is necessary which is declaring
+ big numbers on the stack. The next section describes the derivatives from
+ these which are used for all active control in routines and taking numbers
+ from the heap.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#ssz6" name="ssz5">SOFT_SIZE</a> ,
+ <a href="#spr4" name="spr3">S_PREC</a> ,
+ <a href="#sfr4" name="sfr3">S_FRAC</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Throughout the library <tt><a href="#pr5" name="pr4">PREC</a></tt> and
+ <tt><a href="#fr6" name="fr5">FRAC</a></tt> are used only when constant
+ values are required. This use is initialisation in the header part and
+ taking stack for big numbers.
+<p><tt>S_PREC</tt> and <tt>S_FRAC</tt> are used to control the
+ routines that operate on big numbers to take heap for big numbers.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><tdrowspan=2><td>use<td>definition of FRAC
+<td>SOFT_SIZE undefined<td>SOFT_SIZE defined
+<tr><td>PREC<td>no effect
+<td>S_PREC defined to PREC<br>s_prec defined to PREC
+<td>s_prec declared as variable initialised to PREC
+<br>S_PREC defined to s_prec
+<tr><td rowspan=2>FRAC<td>0 which is default
+<td colspan=2>no f-p so no further representation
+<tr><td>&gt; 0<td>S_FRAC defined to FRAC<br>s_frac defined to FRAC
+<td>s_frac declared as a variable initialised to FRAC
+<br>S_FRAC defined to s_frac
+</table>
+<p>In summary by default <tt>S_PREC</tt> and <tt>S_FRAC</tt> are
+ constants, but with <tt>SOFT_SIZE</tt> defined they are replaced by
+ variables which may be set by the user. To access the value in use
+ the user may write interchangeably <tt>S_PREC</tt> or <tt>s_prec</tt>
+ and <tt>S_FRAC</tt> or <tt>s_frac</tt> on stylistic preference.
+<p>Throughout the library I use the upper case forms unless the
+ content is under <tt>SOFT_SIZE</tt>&nbsp;, where the lower case
+ forms exclusively refer to the variables.
+<p>With <tt>SOFT_SIZE</tt> defined <tt>s_prec</tt>
+ is declared as a global int variable with an initial value of
+ <tt><a href="#pr6" name="pr5">PREC</a></tt>&nbsp;.
+<p>At any time a single stream user's program may assign a
+ new value to <tt>S_PREC</tt> and the library will process the new
+ length of numbers.
+<p>In any program with <tt><a href="#ush4" name="ush3">USE_HEAP</a></tt>
+ undefined, the value of
+ <tt>S_PREC</tt> must be no greater than <tt>PREC</tt> because all
+ scratchpad numbers are created on the stack.
+<p>Whenever a routine is called the value assigned to <tt>S_FRAC</tt>
+ must be less than <tt>S_PREC</tt>&nbsp;.
+<p>Using the arithmetic routines a value of zero may
+ be assigned to <tt>S_FRAC</tt>&nbsp;. If
+ <tt><a href="#bro4" name="bro3">B_ROUND</a></tt> is not zero
+ this will then provide rounded integer results from
+ <tt><a href="#divb2" name="divb1">div_big</a></tt>&nbsp;,
+ or integer divide using
+ <tt><a href="#idvb2" name="idvb1">i_div_big</a></tt>&nbsp;.
+ <tt><a href="#modb2" name="modb1">mod_big</a></tt> remains available.
+<p>Using the accessories
+ <tt><a href="#blog4" name="blog3">biglog</a></tt> or
+ <tt><a href="#blig4" name="blig3">bigtrig</a></tt> 
+ a value of zero must never be assigned to <tt>S_FRAC</tt>&nbsp;.
+<p><tt>S_PREC</tt> and <tt>S_FRAC</tt> may
+ be set by the users program.
+<p>Using <tt>SOFT_SIZE <a href="#bliA" name="bli9">bign.lib</a></tt>
+ provides no active checks that a user's assignments are within the limits
+ given above, and there is no function provided to manage the change.
+<p>To access a big number, <tt>x</tt> , in a changeing environment requires a
+ pointer that is assigned whenever the parameters change to
+ <nobr><tt>x + <a href="#fr7" name="fr6">FRAC</a> - S_FRAC</tt> .</nobr>
+ The initial <tt>PREC</tt> must accomodate the greatest
+ size that will be used. No routine in the library converts from one definition
+ of a big number to another, although it is often desireable to producing a
+ a smaller number with constant active precision.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#ush5" name="ush4">USE_HEAP</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If <tt>USE_HEAP</tt> is defined then all scratchpad big numbers are put
+ on the heap. It provides the length needed based on a big number length of
+ <nobr><tt>( <a href="#spr5" name="spr4">S_PREC</a> +
+ <a href="#sig3" name="sig2">SIGNED</a> )</tt> .</nobr>
+<p>The default for <tt>USE_HEAP</tt> is undefined, which puts the scratchpads
+ on the stack.
+<p>This may be of use if the stack is insufficient for the task. Under
+ <tt><a href="#ssz7" name="ssz6">SOFT_SIZE</a></tt> it provides memory
+ as required by <tt>S_PREC</tt>&nbsp;.
+<p><tt>S_PREC</tt> may be any value permitted for
+ <tt><a href="#pr7" name="pr6">PREC</a></tt>&nbsp;.
+ <tt><a href="#sfr5" name="sfr4">S_FRAC</a></tt> must be less than
+ <tt>S_PREC</tt>&nbsp;.
+<p>If there is insufficient heap available to meet the need then execution is
+ halted with a record sent to
+ <tt><a href="#esm3" name="esm2">ERR_SM</a></tt>&nbsp;, irrespective of
+ <tt><a href="#erm4" name="erm3">ERROR_MODE</a></tt>&nbsp;.
+<p><tt>std.lib</tt> is included by
+ <tt><a href="#bliB" name="bliA">bign.lib</a></tt> . If a user wishes heap
+ use to be supported by <tt>alloc.h</tt> then it has to be included by the user.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#bro5" name="bro4">B_ROUND</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>With fractional compilation, that is
+ with <tt><a href="#fr8" name="fr7">FRAC</a> > 0</tt> ,
+ binary rounding of arithmetic results is available.
+ The macro <tt>B_ROUND</tt> controls this. This has a default of
+ <tt>0&nbsp;. B_ROUND</tt> values may be as here. The table shows the bit values
+ that produce an increment, always away from zero, at the least significant
+ bit of the answer.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>B_ROUND<td>rounding<td>lsb<td>condition of u-f for rounding
+<tr><td align="center">0<br>1<br>2<br>&nbsp;<br>3<br>&nbsp;
+<td>none<br>yes<br>yes<br><br>yes<br>&nbsp;
+<td>any<br>any<br>0<br>1<br>0<br>0
+<td>.<br>&gt;= 1 0000 ...
+<br>&nbsp;&gt; 1 0000 ...<br>>= 1 0000 ...
+<br>>= 1 0000 ...<br>&nbsp;&gt; 1 0000 ...
+</table>
+</p></ul>
+<p><tt>B_ROUND</tt> applies to multiply, non integer divide and shift.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#btr4" name="btr3">BIG_TRACE</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If <tt>BIG_TRACE</tt> is defined then when called the 
+<a href="#sta3" name="sta2">standard arithmetic
+ functions</a> put a code character on a stream defined to
+ <tt><a href="#trs4" name="trs3">TR_SM</a></tt>&nbsp;. The codes are
+ listed with the functions.
+<p>When included the accessory functions, such as in
+ <a href="#bacc5" name="bacc4">big_acc.lib</a></tt>, make their own
+ presentations on <tt>TR_SM</tt>&nbsp;.
+<p>The default definition for <tt>TR_SM</tt> is <tt>stdout</tt> and to this
+ stream every output is followed by a
+ <nobr><tt>fflush ( stdout ) ;</tt> .</nobr>
+<p><b>Do not</b> define <tt>TR_SM</tt> to <tt>stdout</tt> . To send trace to
+ <tt>stdout</tt> allow the default from a definition of
+ <tt>BIG_TRACE</tt>&nbsp;.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#bnum0" name="bnum1">big numbers</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>A big number, <tt>x</tt> , is stored as binary in an array of
+ <a href="#bele8" name="bele7">elements</a>.
+<p>If the compiler uses a long, or a long long, that is twice the length of
+ an int then the element is an unsigned int&nbsp;.
+<p>If the long and int are both made of 32 bits then the element is a
+ unsigned short&nbsp;.
+<p>The least significant bit of the big number is the bit 0 in
+ <nobr><tt>x [ 0 ]</tt> .</nobr>
+<p>By default compilation is fixed precision fixed point. The overall
+ precision in elements is the definition of
+ <tt><a href="#pr8" name="pr7">PREC</a></tt>&nbsp;. Variable precision and f-p
+ length is obtained by defining
+ <nobr><tt><a href="#ssz8" name="ssz7">SOFT_SIZE</a></tt> ,</nobr> described
+ below.
+<p>The most significant bit is at the top of
+ <nobr><tt>x [ <a href="#pr9" name="pr8">PREC</a> - 1 ]</tt> .</nobr>
+ Any bit pattern is a valid number in the array from
+ <nobr><tt>x [ 0 ]</tt></nobr> to <nobr><tt>x [ PREC - 1 ]</tt> .</nobr>
+<p>In a fixed size compilation the size of a fraction-part in elements is the
+ definition of <tt><a href="#fr9" name="fr8">FRAC</a></tt>&nbsp;. The f-p then
+ extends from
+ <tt><nobr>x [ 0 ]</nobr></tt> up to <nobr><tt>x [ FRAC - 1 ]</tt> .</nobr>
+ Within a big number, the unit value is in the least significant bit of
+ <nobr><tt>x [ FRAC ]</tt> .</nobr>
+<p><tt><a href="#frA" name="fr9">FRAC</a></tt> may be defined to any
+ positive number that is less than
+ <nobr><tt><a href="#prA" name="pr9">PREC</a></tt> .</nobr>
+<p>If <tt><a href="#frB" name="frA">FRAC</a></tt>
+ is defined to <tt>0</tt> then integer arithmetic is compiled.
+<p>If <tt><a href="#sig4" name="sig3">SIGNED</a></tt> is defined
+ to <tt>0</tt> then unsigned arithmetic is compiled.
+ If <tt>SIGNED</tt> is defined to <tt>1</tt> then signed arithmetic is compiled.
+<p>With <tt><a href="#sig5" name="sig4">SIGNED</a></tt> defined to <tt>1</tt> ,
+ one element is added to the array of a big number, this is the sign element.
+<p>Within the sign element a zero indicates positive. <tt>1</tt> in the sign
+ element negates any number. No other values may be used in the sign element.
+<p>The sign may be accessed to test, set or change at
+ <nobr><tt>x [ <a href="#spr6" name="spr5">S_PREC</a> ]</tt> .</nobr> For
+ instance this is one of the ways to change the sign of a number&nbsp;:
+ <nobr><tt>x [ S_PREC ] = ! x [ S_PREC ] ;</tt> .</nobr>
+<p>With the exception of the sign element, all bit patterns in a big number
+ array are permitted.
+<p>Minus zero is accepted as a valid representation of zero. All the routines
+ accept this as a source and process minus zero correctly. Arithmetic routines
+ may produce a minus zero. Several routines change a minus zero to plus. Minus
+ zero is never output.
+<p>If a reader finds minus zero an unacceptable concept then I ask you to
+ consider the acceptable C here&nbsp;: <nobr><tt>a = - 0 ;</tt> .</nobr>
+ More troubling is&nbsp;:  <nobr><tt>a = - INT_MIN ;</tt> .</nobr>
+<p>Reference to a big numbers is by a pointer to the number. The name of
+ every array is a pointer to that array.
+<p>This table shows the alternatives offered to create big numbers.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>where<td>written code<td>effect
+<tr><td>definitions
+<td><a href="#bign0" name="bign1">big_n x , y ;
+<td>defines big numbers x and y on the stack
+<tr><td colspan=3>with <a href="#ush6" name="ush5">USE_HEAP</a> undefined
+<tr><td>definitions<br>active code<br>&nbsp;
+<td><a href="#defb0" name="defb1">DEF_BN_( x ) ;</a>
+<br><nobr><a href="#bnhp0" name="bnhp1">BN_HEAP_( x ) ;</a></nobr>
+<br><a href="#freeb0" name="freeb1">FREE_B_( x ) ;</a>
+<td>defines big number x on the stack<br>no code, no effect<br>no code,
+ no effect
+<tr><td colspan=3>with USE_HEAP defined
+<tr><td>definitions<br>active code<br>&nbsp;
+<td>DEF_BN_( x ) ;
+<br>BN_HEAP_( x ) ;
+<br>FREE_B_( x ) ;
+<td>defines big_n * x ;
+<br>
+<nobr>new big number created on <a href="#ush8" name="ush7">heap</a> ,
+ x points to it</nobr>
+<br>frees x from heap 
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h2 class="z"><a href="#erm5" name="erm4">ERROR_MODE</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Error checking is available throughout. The form of error
+ response is chosen by defining <tt>ERROR_MODE</tt>&nbsp;.
+<p>An error stream is defined by <a href="#esm4" name="esm3">ERR_SM</a> .
+ Error messages are sent to ERR_SM&nbsp;. The default for this is
+ <tt>stdout</tt>&nbsp;.
+<p>This table defines the effects.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>ERROR_MODE<td>effect
+<tr><td valign="top" align="center">0
+<td><a href="#sta4" name="sta3">standard arithmetic functions</a>
+ that may produce an error are type void
+<br>there is no error checking
+<br>errors will process to yield faulty results
+<tr><td valign="top" align="center">1
+<td>standard functions that may produce an error are type int
+<br>these function returns 0 on success or 1 on error
+<tr><td valign="top" align="center">2
+<td>as 1 but an error function is compiled
+<br>the error function is called on error
+<br>if <a href="#nob3" name="nob2">NO_BELL</a> is not defined \a
+ is sent to <tt>stdout</tt>
+<br><nobr>text naming the function containing the error is sent
+ to <a href="#esm0" name="esm4">ERR_SM</a></nobr>
+<br>the error function waits for a key depression
+<br>control then returns 1 to the call
+<tr><td valign="top" align="center">3
+<td>as 2 but if the user presses the 'q' key the process terminates
+<tr><td valign="top" align="center">4
+<td>as 3
+<br>all functions are of type void
+<br>on error the error function waits for any key then terminates
+<tr><td valign="top" align="center">10
+<td>as 2 but returns without waiting for a key depression
+<tr><td valign="top" align="center">12
+<td>as 4 but exits without waiting for a key depression
+</table>
+<p>With <tt><a href="#erm6" name="erm5">ERROR_MODE</a></tt> set to <tt>0</tt>
+ there is no response to an error. If there is an error the functions will
+ safely provide faulty answers, a user's loop may not close.
+<p>At <tt>ERROR_MODE > 0</tt> errors
+ will initiate response :
+<ul><p>over-flow<br>divide by zero
+<br>stream access failure
+<br>non parsing or no digit in input stream or text string
+</p></ul>
+<p>With <tt><a href="#erm7" name="erm6">ERROR_MODE</a></tt> set to <tt>3</tt> ,
+ <tt>4</tt> or <tt>12</tt> an exit statement is provided. This uses as its
+ argument <tt><a href="#erx0" name="erx2">ERR_EX</a></tt>&nbsp;. <tt>ERR_EX</tt>
+ has a default definition of <nobr><tt>( 1 )</tt></nobr> which assumes that the
+ user's <tt>main</tt> is type <tt>int</tt>&nbsp;. <tt>ERR_EX</tt> may be defined
+ as any other value within brackets or to space for a <tt>void</tt> compilation.
+<p>For <tt>( ( ERROR_MODE & 63 ) > 1 )</tt> , all errors from an action make a
+ call to a function with this prototype&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>
+
+<a href="#erf0" name="erf2">void error_function ( char * sg ) ;</a></table>
+<p>Throughout the library the text string <tt>sg</tt> is a literal that
+ describes the error.
+<p>If the user defines <nobr><tt>( ERROR_MODE > 63 )</tt></nobr> then the
+ analysis within the functions is compiled using the low 6 bits but the body of
+ <tt>error_function</tt> is not compiled. A user must provide a replacement
+ using the prototype given to catch the errors. This feature is for the user to
+ provide any error response required. For these values only
+ <nobr><tt>( ERROR_MODE & 2 )</tt></nobr> the active functions expect a return
+ from which they immediately return.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#ari0" name="ari1">arithmetic</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Two groups of functions are provided. These are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>group<td>characteristic
+<td>response to error as required by definition of
+ <a href="#erm8" name="erm7">ERROR_MODE</a>
+<tr><td>standard<br>technical
+<td>easy to use<br><nobr>for use in accessory functions</nobr>
+<td><nobr>outputs message, returns 1 or exits</nobr><br>returns 1
+
+</table>
+<p>These are listed in the two subsections below in the form as called.
+<p>Above are the <a href="#stdu0" name="stdu2">standards used</a>.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#sta0" name="sta4">standard arithmetic functions</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Return type <tt><a href="#r_d1" name="r_d0">R_D</a></tt> is <tt>void</tt> if
+ <tt><a href="#erm9" name="erm8">ERROR_MODE</a></tt> is <tt>0</tt> ,
+ <tt>4</tt> or <tt>12</tt> , and <tt>int</tt> if <tt>ERROR_MODE</tt> is
+ <tt>1</tt>&nbsp;, <tt>2</tt>&nbsp;, <tt>3</tt> or
+ <tt>8</tt>&nbsp;. When <tt>int</tt> type <tt>R_D</tt> returns
+ <tt>0</tt> on success or <tt>1</tt> on error.
+<p>These functions accept as arguments any repetitions of the same big number.
+ Memory used is measured in big numbers .
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>standard function calls<td>effect<td>return<br>type<td>trace<br>char
+<td>mem<br>take<td>notes
+<tr valign="top">
+<td><a href="#zb0" name="zb1">zero_big ( x ) ;
+<br><a href="#cpb0" name="cpb1">copy_big ( w , x ) ;
+<br><a href="#addb0" name="addb1">add_big ( w , x , y ) ;</a>
+<br><a href="#subb0" name="subb1">sub_big ( w , x , y ) ;
+<br><a href="#mulb2" name="mulb1">mult_big ( w , x , y ) ;
+<br><a href="#divb3" name="divb2">div_big ( w , x , y ) ;</a>
+<br><a href="#modb3" name="modb2">mod_big ( w , x , z ) ;</a>
+<br><a href="#idvb3" name="idvb2">i_div_big ( w , x , y ) ;</a>
+<br><a href="#divb42" name="divb41">div_big_4<br>&nbsp; ( w , x , y , z ) ;</a>
+<br><a href="#bshif0" name="bshif2">big_shift ( li , x , y ) ;</a><br>&nbsp;
+<br><a href="#divinto2" name="divinto1">div_bintoi<br>&nbsp; ( x , i , y ) ;</a>
+<br><a href="#addi0" name="addi1">add_int ( i , x , y ) ;</a>
+<br><a href="#subi0" name="subi1">sub_int ( i , x , y ) ;</a>
+<br><a href="#muli0" name="muli1">mult_int ( i , x , y ) ;</a>
+<br><a href="#divi0" name="divi1">div_int ( i , x , y ) ;</a>
+<br><a href="#divi40" name="divi41">div_i_4
+<br><nobr>&nbsp; ( i , x , y , & rem ) ;</nobr></a>
+<td>x = 0<br>x = w<br>y = x + w
+<br>y = x - w<br>y = x * w<br>y = x / w<br>z = x % w<br>y = x \ w
+<br>z = x % w<br>y = x \ w<br>y = x * ( 2<sup>li</sup> )
+<br><nobr>&nbsp;&nbsp;= x shifted li bits</nobr>
+<br>y = i / x<br>&nbsp;<br>y = x + i<br>y = x - i
+<br>y = x * i<br>y = x / i<br>y = x / i<br>rem = x % i
+<td>void<br>void<br><a href="#r_d2" name="r_d1">R_D</a><br>R_D<br>R_D
+<br>R_D<br>R_D<br>R_D<br>R_D<br>&nbsp;<br>R_D<br>&nbsp;
+<br>R_D<br>&nbsp;<br>R_D<br>R_D<br>R_D<br>R_D<br>R_D<br>&nbsp;
+<td align="center">0<br>c<br>+<br>-<br>*<br>/<br>%<br>\<br>4<br>&nbsp;
+<br>z<br>&nbsp;<br>u<br>&nbsp;<br>a<br>s<br>m<br>d<br>j<br>&nbsp;
+<td align="center">.<br>.<br>.<br>.<br>1<br>2<br>2<br>2<br>2<br>&nbsp;<br>.
+<br>&nbsp;<br>3<br>&nbsp;<br>.<br>.<br>.<br>.<br>.
+<td>&nbsp;<br>&nbsp;<br>&nbsp;<br>1<br>&nbsp;<br>&nbsp;<br>2<br>3
+<br><nobr>4 , 5</nobr><br><br>6<br>&nbsp;
+<br>7<br>&nbsp;<br>7<br>7<br>7<br>7<br>7 , 8
+</table>
+<p>The notes are :<ul>
+<p>1 &nbsp; when <tt><a href="#sig6" name="sig5">SIGNED</a></tt>
+ is defined to zero there can be no error, return type is the same
+<br>2 &nbsp; the modulus is the dividend minus the nearest integer multiple
+ towards zero
+<br>3 &nbsp; in an integer compilation, that is with
+ <tt><a href="#frC5" name="frB">FRAC</a></tt> defined to zero,
+<br> &nbsp; &nbsp; &nbsp;
+ <tt><a href="#idvb4" name="idvb3">i_div_big</a></tt> function dissapears
+<br> &nbsp; &nbsp; &nbsp;and any text occurrence is defined to
+ <tt><a href="#divb4" name="divb3">div_big</a></tt>
+<br>4 &nbsp; <tt>div_big_4</tt> gives integer division and modulus
+<br>5 &nbsp; <tt>y == z</tt> or <tt>y == NULL</tt> delivers modulus
+<br>6 &nbsp; positive value of <tt>li</tt> shifts up, negative shifts down
+<br> &nbsp; &nbsp; &nbsp;error response is caused by o-f,
+ shift down accepts any u-f
+<br> &nbsp; &nbsp; &nbsp;if <tt><a href="#sig7" name="sig6">SIGNED</a></tt>
+ , sign of x is copied to y
+<br>7 &nbsp; for some limits on the int value, see below
+<br>8 &nbsp; <tt>rem</tt> is an int provided by the user
+</p></ul>
+<p>In compilations that use an unsigned int as the array element any valid
+ number may be used in the int i .
+<p>In a compilation using a 16 bit unsigned short as the array element the
+ value in the int i must be as below. This is not tested during execution.</p>
+<ul><p><tt>- 0x10000 &lt;= i &lt;= + 0x10000</tt></p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#seca0" name="seca1">technical arithmetic functions</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>These functions have characteristics :
+<ul><p>if <tt><a href="#ermA" name="erm9">ERROR_MODE</a></tt> is zero
+ they are all <tt>void</tt>
+<br>if <tt>ERROR_MODE</tt> is not zero they are all <tt>int</tt>
+ returning 0 on success or 1 on error.
+<br>they give no trace output
+<br>values in the long arguments have limits, described below.
+</p></ul>
+<p>Functions are as in this table.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>technical function calls<td>effect<td>memory<br>take
+<tr><td><a href="#radb0" name="radb1">rawadd_big ( w , x , y ) ;</a>
+<br><a href="#rsubb0" name="rsubb1">rawsub_big ( w , x , y ) ;</a>
+<br><a href="#rmulb2" name="rmulb1">rawmult_big ( w , x , y ) ;</a>
+<br><a href="#rbintob2" name="rbintob1">rawdivbintoi ( x , i , y ) ;</a>
+<br><a href="#addli0" name="addli1">add_li ( li , x ) ;</a>
+<br><a href="#addlp0" name="addlp1">add_li_place ( li , x , m ) ;</a>
+<br>&nbsp;
+<br><a href="#mulli0" name="mulli1">mult_li ( li , x , y ) ;</a>
+<br><a href="#divli0" name="divli1">div_li ( li , x , y ) ;</a>
+<br><nobr><a href="#divli40" name="divli41">div_li_4 ( li , x , y , & li_rem ) ;</a></nobr>
+<td>y = x + w<br>y = x - w<br>y = x * w
+<br>y = i / x<br>x = x + li<br>x = x + li ,
+<br>&nbsp; add at <a href="#bele9" name="bele8">element</a> place m
+<br>y = x * li<br>y = x / li<br><nobr>y = x / li , li_rem = x % li</nobr>
+<td align="center">.<br>.<br>1<br>3<br>.<br>.<br>&nbsp;<br>.<br>.<br>.
+</table>
+<p>The acceptable range of values in the <a href="#blon7" name="blon6">blong</a>
+ li are limited, determined by the type lengths, as below.
+<p>Excess is not tested during execution.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td><a href="#beleA" name="bele9">element</a> :
+ <a href="#blon8" name="blon7">blong</a>
+<br>sizes<td>minimum in li<td>maximum in li
+<tr><td align="center">16 : 32<br>32 : 64
+<td>-0x10000<br>-0x100000000
+<td>0x10000<br>0x100000000</table>
+<p>This table shows the parameterised macros that convert to functions that call
+ the divide engine. Their characteristics are as the list at the top of this
+ subsection.
+<p>Each of these take <tt>2</tt> big numbers for scratch memory.
+<p>If the definitions for compilation omit either or both rounding and underflow
+ control then the macros remain with these features omitted. As that happens
+ their effects duplicate each other.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>technical macro calls<td>effect
+<td>divide<br>length<td>rounded<td align="center">u/f
+<br>ifdef <a href="#mduf4" name="mduf3">MDUF</a>
+<tr><td><a href="#rdb2" name="rdb1">rawdiv_big_( w , x , y ) ;</a>
+<br><a href="#bndo0" name="bndo1">bndo0_( w , x , y )</a>
+<br><a href="#rmb2" name="rmb1">rawmod_big_( w , x , y ) ;</a>
+<br><a href="#rid2" name="rid1">rawi_div_( w , x , y ) ;</a>
+<br><nobr><a href="#rd42" name="rd41">rawdiv_4_( w , x , y , z ) ;</a>
+<br>&nbsp;
+<td><nobr>y = x / w<br>y = x / w<br>y = x % w<br>y = x \ w
+<br>y = x \ w<br>z = x % y
+<td>all<br>all<br>integer<br>integer<br>integer<br>&nbsp;
+<td>yes<br>no<br>no<br>no<br>no<br>&nbsp;
+<td align="center">divuf<br>divuf
+<br>S_PREC<br>S_PREC<br>S_PREC<br>&nbsp;
+</table>
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#mduf5" name="mduf4">MDUF</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If <tt><a href="#frC" name="frC5">FRAC</a></tt> is not zero, defining
+ <tt>MDUF</tt> lets a user control the exactitude of multiply and divide.
+
+<p>By default multiply and divide provide the logically correct
+ answer for any pair of parameters. The user may control the underflow used in
+ calculation to introduce a small chance of a one bit error and save up
+ to almost half the time.
+<p>These functions work in different ways, set out here.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>process<td>functions<td>macros<td>process
+<td>FRAC<td>default underflow
+<tr valign="top"><td rowspan=2>multiply
+<td rowspan=2><a href="#mulb0" name="mulb2">mult_big</a>
+<td rowspan=2><a href="#rmulb0" name="rmulb2">rawmult_big_</a>
+<td rowspan=2>direct calculation<br>of underflowing answer<td>0<td>0
+<tr><td>&gt; 0<td><a href="#sfr6" name="sfr5">S_FRAC</a>
+<tr valign="top"><td rowspan=2>divide
+<td rowspan=2><a href="#divb0" name="divb4">div_big</a>
+<br><a href="#divinto0" name="divinto2">div_bintoi</a>
+<br><a href="#rbintob0" name="rbintob2">rawdivbintoi</a>
+<td rowspan=2><a href="#rdb0" name="rdb2">rawdiv_big_
+<td>progressive subtraction from<br>underflowing residue
+<td>all values<td><a href="#spr7" name="spr6">S_PREC</a>
+</table>
+<p>With <tt>FRAC</tt> defined to a non zero value a user may control the
+ underflow in the divide and multiply by defining <tt>MDUF</tt> to a value.
+ This causes compilation with the necessary code and definition of two global
+ variables both initialised to the value of <tt>MDUF</tt>
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>variable names<td>controls underflow in
+<tr><td><a href="#muluf0" name="muluf1">muluf</a>
+<td>fractional multiplication
+<tr><td><a href="#divuf2" name="divuf1">divuf</a>
+<td>fractional division
+</table>
+<p>As well as initialising these variables the user may set or read the values
+ at any time.
+<p>The library uses the values set by the user, it does not assign to these.
+<p>If a value in either variable is within the range <tt>0</tt> up to the
+ default then at the time of use the function uses the value. If the variable is
+ set outside the range then the default value is used by the function.
+ I often use <nobr><tt>( - 1 )</tt> .</nobr>
+<p>These big into big divides are not affected, as they always provide
+ an integer division they always use the default underflow :</p>
+<ul><tt><a href="#idvb0" name="idvb4">i_div_big</a>
+<br><a href="#rid0" name="rid2">rawi_div_</a>
+<br><a href="#divb40" name="divb42">div_big_4</a>
+<br><a href="#rd40" name="rd42">rawdiv_4_</a>
+<br><a href="#modb0" name="modb3">mod_big</a>
+<br><a href="#rmb0" name="rmb2">rawmod_big_</a></tt></ul>
+<p>If <tt>FRAC</tt> is defined to zero then defining <tt>MDUF</tt> will have
+ no effect, all divisions will use the default underflow.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#tesf0" name="tesf2">test functions</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>These functions perform tests and return answers. Be careful of types.
+<p>The bit place of <tt>0 ... 0 1 :</tt> is <tt>0</tt> . Bit places within
+ a number run up to <nobr><tt>( <a href="#spr8" name="spr7">S_PREC</a> *
+ <a href="#bpe3" name="bpe2">B_P_E</a> - 1 )</tt> .</nobr> A number
+ equal to zero has a bit place of <tt>-1</tt>&nbsp;. The ( signed )
+ functions return with sign copying the sign of the source.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>test call<td>type<td>returns<td>notes
+<tr><td><a href="#mssb0" name="mssb1">mssb ( x ) ;</a>
+<br><a href="#obit0" name="obit1">overbit ( x ) ;</a>
+<br><a href="#obd0" name="obd1">obitdif ( x , y ) ;</a>
+<br><nobr><a href="#aob0" name="aob1">a_obitdif ( x , y ) ;</a></nobr>
+<br><a href="#ntop2" name="ntop1">ntop ( x ) ;</a>
+<br><a href="#cpabs0" name="cpabs1">cp_abs ( x , y ) ;</a>
+<td><a href="#blon0TT" name="blon8">blong</a><br>blong
+<br>blong<br>blong<br>blong<br>int
+<td><nobr>absolute bit place</nobr><br>mssb ( x ) + 1<br>overbit of ( y - x )
+<br>absolute ( overbit ( y - x ) )
+<br>mssb ( ( x ) - <a href="#sfr7" name="sfr6">S_FRAC</a> *
+ <a href="#bpe0" name="bpe3">B_P_E</a> )
+<br>x > y ? -1 : ( x == y ? 0 : 1 )
+<td>1 , 2<br>.<br>3<br>.<br>.<br>.
+</table>
+<p>The notes are :
+<ul><p>1 &nbsp; x contains zero produces return of <tt>-1</tt>
+<br>2 &nbsp; if <tt><a href="#sig8" name="sig7">SIGNED</a></tt>
+ when x contains zero then x is made positive
+<br>3 &nbsp; <tt>obitdif ( x , y )</tt> has the sign of <tt>( y - x )</tt>
+<br>4 &nbsp; <tt>cp_abs</tt> returns <tt>- 1</tt> , <tt>0</tt> or
+ <tt>1</tt></p></ul>
+
+<p class="u"><table width=95%><tr>
+
+<td><h2><a href="#convio0" name="convio2">conversion, input and output</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>There are seven functions, summarised in the table below. Each is
+ described in detail later in this section.
+<p>All respond to i/o errors
+ as defined by <tt><a href="#ermB" name="ermA">ERROR_MODE</a></tt>&nbsp;,
+ except the two <a href="#cinp2" name="cinp1">console input</a> functions
+ which are fully described in their section.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>function call<td>effect<td>memory<br>take<td>notes
+<tr valign="top">
+<td><a href="#numh3" name="numh2">num_here ( sg , x ) ;</a>
+<br><a href="#bin3" name="bin2">big_in</a>
+<br><a href="#bigo3" name="bigo2">big_out</a>
+<br><a href="#kb22" name="kb21">kb_2_big ( x ) ;</a>
+<br><nobr><a href="#kb222" name="kb221">kb_2_big_2 ( x , base ) ;</a></nobr>
+<br><a href="#bitsh3" name="bitsh2">bit_show ( x ) ;
+<br>bits_out<br>&nbsp; &nbsp; ( x , sz , sm ) ;</a>
+<td>converts text in sg to x<br><nobr>text from sm to x, see below</nobr>
+<br>x as text to sm
+<br><nobr>collects x from the console</nobr>
+<br>&nbsp; ~ , as base
+<br><nobr>bit pattern of x to stdout<nobr>
+<br>bit pattern of x ,<br>&nbsp; &nbsp; sz
+ <a href="#beleB" name="beleA">elements</a> to sm
+<td align="center">.<br>2.2<br>2.2<br>KB_LEN<br>KB_LEN<br>.<br>.<br>&nbsp;
+<td align="center">&nbsp;<br>1, 2<br>1, 2<br>.<br>.<br>&nbsp;
+</table>
+<p>The notes are :<ul>
+<p>1 &nbsp; conversion from decimal requires quoted memory, from hex the take
+ is nil
+<br>2 &nbsp; described fully below
+</ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#nel2" name="nel1">natural length</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>All input and output works with ascii using what I term the natural length
+ of a big number or each part of a big number.
+<p>The natural length is the smallest number of ascii characters that provides a
+ unique representation for every possible binary pattern in a particular size of
+ the integer, and if present the fraction, parts of a big number.
+<p>For hex the natural length is always an accurate representation of the binary.
+<p>The least significant binary digit in a big number represents a decimal
+ increment with invisible underflow, greater than 1 and less than 10 at the
+ least significant decimal place.
+<p>For instant values during execution these macros are defined as in the table
+ below. <tt>BNASZ</tt> is a parameterised macro that yields the number of
+ decimal digits natural length for a given number of elements. If
+ <tt><a href="#nod4" name="nod3">NO_DEC</a></tt> is defined then
+ these are not available.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>defined as<td>gives
+<tr><td><a href="#intch0" name="intch1">INT_CHAR</a><br>&nbsp;
+<br><a href="#frch0" name="frch1">FRAC_CHAR</a><br>&nbsp;
+<td>BNASZ( S_FRAC )<br>&nbsp;
+<br><nobr>BNASZ( <a href="#spr9" name="spr8">S_PREC</a> - S_FRAC )</nobr>
+<br>&nbsp;
+<td>natural length of decimal characters<br>for fraction-part
+<br>natural length of decimal characters<br>for integer-part
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#nod5" name="nod4">NO_DEC</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If the macro <tt>NO_DEC</tt> is defined then no decimal conversions are
+ compiled. With <tt>NO_DEC</tt> defined the only conversion provided is to and
+ from hex. By default <tt>NO_DEC</tt> is not defined, so decimal conversions are
+ expected.
+<p>All inputs accept numbers preceded by <tt>0x</tt>&nbsp;,
+ these are processed as hex.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>base<td>associated with
+<tr><td align="center"><tt>&nbsp;0</tt><br><tt>10</tt><br><tt>16</tt>
+<td><tt>0x</tt> led hex<br><tt>decimal</tt>
+<br><tt>hex, with no token &nbsp;</tt>
+</table>
+<p>The maximum lengths of the i-p and, if present, f-p are the fewest fixed
+ number of characters that will present a unique representation of the binary.
+ This is the <a href="#nel3" name="nel2">natural length</a> of each part.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#daj4" name="daj3">BIG_DAJ</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If the active bit length of an f-p, counting bits down from the point, is
+ greater than the <a href="#nel4" name="nel3">natural length</a> of decimal
+ digits used to represent it then the conversion between binary and decimal
+ cannot be precise.
+<p>Repeated imprecise decimal input and output of a fraction if rounded down
+ causes a number to creep towards zero by 1 , until it becomes
+ a precise conversion. The user may define <tt>BIG_DAJ</tt> to prevent this.
+<p><tt>BIG_DAJ</tt> causes am imprecise conversion in one direction to be
+ rounded down and in the other direction to be rounded up. Repeated cycles of
+ decimal save and read keep the same number. 
+<p>The operation of <tt>BIG_DAJ</tt> is :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td rowspan=2>&nbsp;<br>BIG_DAJ<td colspan=2>rounding of imprecise
+ decimal conversion
+<tr><td>input<td>output
+<tr><td align="center">0<br>1<br>2
+<td>towards zero<br>away from zero<br>towards zero
+<td>towards zero<br>towards zero<br>away from zero
+</table>
+<p>The default for <tt>BIG_DAJ</tt> is
+ <tt>( <a href="#frD" name="frC">FRAC</a> > 0 )</tt>&nbsp;. So in a fractional
+ compilation <tt>BIG_DAJ</tt> is set to <nobr><tt>1</tt> .</nobr>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#numh4" name="numh3">num_here</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>This function takes the ascii number in sg and puts it into <tt>x</tt>&nbsp;:
+<ul><p><tt>num_here ( sg , x ) ;</tt></p></ul>
+<p>The digits terminate at the zero character that
+ marks the end of the string. White space is not allowed within the number.
+<p><tt>num_here</tt> by default expects a decimal number unless
+ <tt><a href="#nod6" name="nod5">NO_DEC</a></tt>
+ is defined when it will expect a hex number. The token <tt>0x</tt> signals
+ a following hex number.
+<p>Decimal adjustment, controlled by the definition of
+ <tt><a href="#daj5" name="daj4">BIG_DAJ</a></tt>&nbsp;, is applied.
+<p>The user provides the string, there is no restriction on this other than
+ imposed by C&nbsp;.
+<p>It is of type <tt><a href="#r_d3" name="r_d2">R_D</a></tt> . That is its
+ type and response to errors depends on
+ the definition of <tt><a href="#ermC" name="ermB">ERROR_MODE</a></tt>&nbsp;.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#iomac0" name="iomac1">input and output argument macros</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The input function call requires five arguments, the output function call
+ requires eleven or thirteen, depending on compilation. Easy to use macros
+ are provided to make life simpler for the user.
+<p>The default arguments are the same for input and output. So a user can set
+ one value to output and read.
+<p>These macros are described immediately after each of the functions that
+ they use.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#bma2" name="bma1">b_mark</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Any printable character may be used to mark the start of an ascii big number.
+ This may be given as b_mark in <tt>big_out</tt> and <tt>big_in</tt>&mbsp;,
+ or it may given as a definition of
+ <tt><a href="#bmk3" name="bmk2">BIG_MARK</a></tt>&nbsp;.
+<p>The character given is output before the number and is searched for before
+ collecting the number.
+<p>The mark is not read as part of the number. Considering all the possible
+ characters to skip before finding the number it must be unique.
+<p>A special value also is :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>b_mark<td>big_out<br><td>big_in searches for
+<tr><td align="center">0<td>no output<td>no search
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#ben2" name="ben1">b_end</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>This section describes the terminators available for ascii input and output.
+<p>These values may be the definition of
+ <tt><a href="#bien3" name="bien2">BIG_END</a></tt> , or they may be
+ put directly into calls to the input and output functions.
+<p>Any printable character may be used for <tt>b_end</tt>&nbsp;. For each use,
+ the choice must be a character that is unique in context.
+<p>Also these special values of <tt>b_end</tt> may be used :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>b_end<td>big_out terminator,<br><nobr>followed by newline</nobr>
+<td>big_in searches for
+<tr><td align="center">0<br>10<br>13<td>none
+<br>newline
+<br>none
+<td>any non parsing character
+<br><nobr>two newlines, may be separated by whitespace</nobr>
+<br>newline 
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#bin4" name="bin3">big_in</a>
+
+<td align="right"><a href="#contents">contents</a></table>
+<p>This reads ascii from the stream <tt>sm</tt>&nbsp;. It comprises :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>big_in call<td>type<td>described
+<tr><td>big_in (<br>sm ,
+<br><a href="#bma3" name="bma2">b_mark</a>&nbsp;,<br>x ,<br>base ,
+<br><a href="#ben3" name="ben2">b_end</a> )<br>&nbsp; ;
+<td>&nbsp;<br>stream<br>int&nbsp;character
+<br>big number<br>int<br>int character<br>&nbsp;
+<td>&nbsp;<br>source<br>start of number<br>destination
+<br><nobr>base : 0 demands 0x led hex, 10 or 16</nobr>
+<br>terminator<br>&nbsp;
+</table>
+<p><tt>sm</tt> is a source of text provided by the user.
+<p><tt>big_in</tt> takes successive characters from <tt>sm</tt>&nbsp;.
+ It searches for the character
+ <tt><a href="#bma4" name="bma3">b_mark</a></tt>&nbsp;.
+<p>If <tt><a href="#sli3" name="sli2">SHO_LEAD_IN</a></tt> is defined then while
+ searching for the character <tt><a href="#bma5" name="bma4">b_mark</a></tt>
+ it sends every character that is printable to
+ <tt><a href="#trs5" name="trs4">TR_SM</a></tt>&nbsp;.
+ For utility each number read must have a suitable description, or label. 
+<p>It then looks for characters in this order of precedence, working down the
+ list : <nobr><tt>+</tt> or <tt>-</tt> , <tt>0x</tt> ,</nobr> a digit
+ or a point.
+<p>Leading zeroes in the i-p are ignored.
+<p>The number found is put into <tt>x</tt> converted to the int argument
+ <tt>base</tt>&nbsp;. The process stops when it finds the int character
+ <tt><a href="#ben4" name="ben3">b_end</a></tt>&nbsp;. White space is accepted
+ anywhere, except as defined below. If the source f-p is longer than the
+ destination f-p the u-f is silently ignored, the unused characters are
+ passed over to <tt>b_end</tt>&nbsp;.
+<p>If <tt>b_mark</tt> is zero then no search is made and the call must provide
+ the stream ready to immediately parse as a number.
+<p>Whatever is in <tt>base</tt> , if the number is led by
+ <tt>0x</tt> it will be read as hex.
+<p><tt>big_in</tt> is of type <tt><a href="#r_d4" name="r_d3">R_D</a></tt> . Its
+ type and response to errors depends on the definition of
+ <tt><a href="#ermD" name="ermC">ERROR_MODE</a></tt>&nbsp;.
+<p>Errors are :</p>
+<ul><p>stream equals <tt>NULL</tt><br>failure of stream access
+<br>no <tt>0x</tt> when required
+<br>non parsing content of stream<br>no digit prior to terminator
+<br>overflow of i-p<br><tt>EOF</tt></p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#inmac0" name="inmac1">input call macros</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>To make input easier there are two macros that provide
+ <a href="#bin0" name="bin4">big_in</a>
+ with minimum consideration by the user.
+<p>These all employ macro constants as arguments that are provided with
+ default values, which may be overridden, of :
+<ul><p><tt><a href="#bmk4" name="bmk3">BIG_MARK</a>
+<br><a href="#bien4" name="bien3">BIG_END</a></tt></p></ul>
+<p>Both the input macros read an <tt>0x</tt> led hex number.
+<p>Input command macros which read sm into x are below.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>reading macro<td>expects
+<tr><td><a href="#sm2b0" name="sm2b1">sm_2_big_( sm , x ) ;</a>
+<br><a href="#sx2b0" name="sx2b1">smx_2_big_( sm , x ) ;</a>
+<td>decimal number<br>hex number
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#bigo4" name="bigo3">big_out</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>big_out sends big numbers to a stream as ascii&nbsp;. There are 11 arguments
+ in an integer compilation, that is with
+ <tt><a href="#frE" name="frD">FRAC</a></tt> defined to zero, and
+ 13 arguments in a fractional compilation, that is with <tt>FRAC</tt>
+ defined to not zero. The arguments are described in
+ detail after the table. Beyond that are descriptions of macros defined in
+ <tt><a href="#bliC" name="bliB">bign.lib</a></tt>
+ that make simple outputs much easier than using <tt>big_out</tt>&nbsp;.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>big_out<td><a href="#frF" name="frE">FRAC</a><br>only
+<td>type<td>described
+<tr><td>big_out (
+<br>name_len ,<br>sg ,<br>x ,<br>sm
+ ,<br><a href="#bma6" name="bma5">mark</a> ,
+<br><a href="#ben5" name="ben4">b_end</a> ,<br>group_li&nbsp;,<br>line_len ,
+<br><a href="#chip1" name="chip0">chip</a> ,
+<br><a href="#fmo1" name="fmo0">fmode</a> ,
+<br><a href="#chfp1" name="chfp0">chfp</a> ,
+<br><a href="#ledz1" name="ledz0">leadz</a> ,
+<br>base )<br>&nbsp; ;
+<td align="center">&nbsp;<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>yes
+<br>yes<br>.<br>.<br>&nbsp;
+<td>&nbsp;<br>int<br>char *<br>big number<br>stream<br>int&nbsp;char
+<br>int&nbsp;char<br>int<br>int<br>blong<br>int<br>blong<br>int char<br>int
+<br>&nbsp;
+<td>&nbsp;<br>name length in characters
+<br><nobr>name, a string to label output</nobr>
+<br>big number source to output<br>destination<br>start of number mark
+<br>terminator<br>group length, characters<br>line length limit
+<br>minimum i-p length<br>f-p modes, see below
+<br>f-p length, fmode dependant
+<br>leading zero character
+<br>base<br>&nbsp;
+</table>
+<p><tt>sm</tt> is a write text stream either provided by the user any
+ permnent stream provided by C .
+<p>The user is expected to position the output cursor at the start of
+ a new line. <tt>big_out</tt> will convert and output any required big number
+ according to the global definitions or variable values for number size, line
+ length and the parameters passed to the function.
+<p>By default <tt>big_out</tt> completes the output by sending a newline. If
+ this is inhibited by definition of
+ <tt><a href="#bnno0" name="bnno2">BNNONL</a></tt> then the cursor will be
+ after the last character output. This enables tabulated output.
+<p>When <tt>big_out</tt> is called it sends to <tt>sm</tt>
+<ul><p>all the characters that are > 31 of text string <tt>sg</tt>
+<br>if <tt>sg</tt> is longer than <tt>name_li</tt> , a newline
+<br>if <tt>( name_li > 0 )</tt> , spaces topping up to <tt>name_li</tt> and
+ a space
+<br>if <tt>( <a href="#bma7" name="bma6">b_mark</a> > 0 )</tt> ,
+ <tt>b_mark</tt> and a space<br>if <tt>( group_li > 0 )</tt> , space characters
+ to align the point or point place at a gap between groups
+<br>if <tt><a href="#sig9" name="sig8">SIGNED</a> +</tt> or <tt>-</tt> and
+ a space
+<br>if <tt>( base == 0 )</tt> , the token <tt>0x</tt> and a space
+<br>in space separated groups of <tt>group_li</tt> , ascii characters of
+ <tt>x</tt> depending on <tt>base</tt> and
+<br>&nbsp; &nbsp; &nbsp; before the next group will overflow <tt>line_li</tt>
+ characters a newline and space<br>&nbsp; &nbsp; &nbsp; in a fractional
+ compilation with the point placed between two groups
+<br>the terminator <tt><a href="#ben6" name="ben5">b_end</a></tt>
+<br>a newline, unless inhibited by definition of
+ <tt>BNNONL</tt></p></ul>
+<p>I refer to the series out of : mark , sign and <tt>0x</tt> as the tokens.
+<p>If the values of <tt>line_li</tt> , <tt>group_li</tt> and the tokens
+ leave too little space for the first aligned group then a newline is inserted.
+ This newline will be following the label, of if there is still insufficient
+ space after the tokens.
+<p>When hex output is called the case of the characters <tt>'A'</tt> to
+ <tt>'F'</tt> is set by the definition of
+ <tt><a href="#Aora0" name="Aora2">A_a</a></tt>&nbsp;.
+ By default this is defined as <tt>'A'</tt> to give upper case characters,
+ define <tt>A_a</tt> to <tt>'a'</tt> for lower case.
+<p>The case of the <tt>x</tt> in <tt>0x</tt> is within the definition of
+ <tt><a href="#xxX0" name="xxX2">X_x</a></tt>&nbsp;. This has a default of
+ <tt>"0x "</tt> giving lower case. Define it to to the three printable
+ characters <tt>"0X "</tt> for <tt>0X</tt>&nbsp;.
+<p>The output in groups of <tt>group_li</tt> never overflows the line length
+ given by <tt>line_li</tt>&nbsp;.
+<p><tt>line_li</tt> is 2 greater than the maximum number of characters
+ that will be put onto a line. There will be a space, and may once be a point,
+ in the first column. If the maximum allowed width is used then there will be
+ carriage returns in the last column.
+<p>If <tt>group_li</tt> is greater than <tt>line_li</tt> then it is adjusted
+ to fit in the given line.
+<p>If <tt>line_li</tt> is zero then all the output is on one line.
+<p>If <tt>group_li</tt> is zero no groups are created, there is a stream of
+ digits broken by newlines and the point.
+<p>If <tt>line_li</tt> and <tt>group_li</tt> are both zero then a
+ continuous output on one line is produced, with a point as needed.
+<p>If <tt><a href="#cle2" name="cle1">CLEOL</a></tt> is defined by including a
+ console interface then the remainder of each line to the console is cleared.
+<p>The minimum length of the i-p is adjusted by
+ <tt><a href="#chip0" name="chip1">chip</a></tt>&nbsp;. The range of effective
+ values is <tt>1</tt> up to the <a href="#nel0" name="nel4">natural length</a>.
+ Values outside this range produce the natural length. The output always
+ presents all the digits of the i-p, a shorter i-p is filled with the lead
+ character <tt>leadz</tt>&nbsp;.
+<p>In a fractional compilation the output length and position of the f-p is
+ controlled by <tt><a href="#fmo0" name="fmo1">fmode</a></tt> and
+ <tt><a href="#chfp0" name="chfp1">chfp</a></tt>&nbsp;. How these may be used is
+ given by this table.
+
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=2>fmode<td rowspan=2>effect
+<tr><td>bit<td>value
+<tr><td>&nbsp;<td valign="top">0
+
+<td>this is the default used in the output macros
+<br>the value of chfp is cut from the tail
+<br>no extra newline is given before the f-p
+<br>rounding may be given by BIG_DAJ or chfp
+<tr><td>0<td>1<td>chfp delivers an f-p with its number of characters
+<tr><td>1<td>2<td>a newline is forced before the f-p
+<tr><td>2<td>4<td>inhibits all rounding
+<tr><td>&nbsp;<td>3<br>5<br>6<br>7<td>addition of 1 , 2 , 3
+</table>
+<p>If the length of the f-p is less than the natural length then the least
+ signficant ascii digit, decimal or hex, is rounded on the value of the most
+ significant character lost and <tt><a href="#daj0" name="daj5">BIG_DAJ</a></tt>
+ has no effect.
+<p>If a number is to be read using a
+ <tt><a href="#ben7" name="ben6">b_end</a></tt> of <tt>13</tt> then the use of
+ <tt>fmode</tt> set to <tt>2</tt> will prevent access to the f-p&nbsp;.
+<p>Using chfp the carry from rounding the f-p may send a carry up the number.
+ From this a decimal conversion cannot overflow, but a hex conversion can. To
+ hold this carry, if the extra digit is possible then a place for it is
+ provided. With overflow the output will then comprise a '1' followed by zeroes
+ among which may be a point. This number will overflow if it is read back into
+ a big number with the same size of i-p.
+<p>There may be leading zeroes to the i-p . Above the unit place these are
+ represented by the character of
+ <tt><a href="#ledz0" name="ledz1">leadz</a></tt>&nbsp;, which must always be
+ printable. Obvious values which are readable by <tt>big_in</tt> are
+ <tt>' '</tt> and <tt>'0'</tt> &nbsp;; for eyeballs perhaps <tt>'o'</tt> or
+ <tt>( x [ <a href="#sprA" name="spr9">S_PREC</a> ] ? '-' : '+' )</tt>&nbsp;.
+ For an i-p value of 0 at place 0 the zero is always given.
+<p>In a hexadecimal output, if the f-p is truncated and the integer does not
+ overflow, then in the overflow place leadz or space may be shown. If the user
+ sets <tt>chip</tt> to the natural length for the i-p then the overflow place
+ is space, if <tt>chip</tt> is out of range then <tt>leadz</tt> appears. To
+ help a user set the i-p exactly a macro,
+ <tt><a href="#bnxi2" name="bnxi1">BNXICH</a></tt>&nbsp;, is provided as the
+ natural length of a hex integer part. This is defined in the next section.
+<p><tt>big_out</tt> is of type <tt><a href="#r_d5" name="r_d4">R_D</a></tt> .
+ Its type and response to errors depends on the definition of
+ <tt><a href="#ermE" name="ermD">ERROR_MODE</a></tt>&nbsp;.
+<p>Errors may be :</p>
+<ul><p>stream equals <tt>NULL</tt><br>failure of stream access</p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#omac0" name="omac1">output macros</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Output macros each with a single purpose which send x to sm are below. They
+ all use <tt><a href="#bigo0" name="bigo4">big_out</a></tt>&nbsp;.
+ They may be changed by definition before including any bign file :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td><a href="#nln3" name="nln2">NAME_LEN</a>
+<br><a href="#bgr3" name="bgr2">BIG_GROUP</a>
+<br><a href="#lile3" name="lile2">LINE_LEN</a>
+<br><a href="#bmk5" name="bmk4">BIG_MARK</a>
+<br><a href="#bien5" name="bien4">BIG_END</a>
+</table>
+<p>Macros to assist a user user are
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>defined to<td>use
+<tr><td><a href="#bnxp0" name="bnxp1">BNXPE</a>
+<td>4L , 8L , or 8LL depending on compiler
+<td>number of hex characters per big number element
+<tr><td><a href="#bnxi0" name="bnxi2">BNXICH</a>
+<td>( ( blong ) ( ( <a href="#sprB" name="sprA">S_PREC</a> - S_FRAC ) * BNXPE ) )
+<td>number of hex characters for the natural length
+<br>in the integer part of a big number
+</table>
+<p>Macros used for multiple <tt>big_out</tt> arguments are listed here. These
+ collect several of the single purpose macros listed above. They may be changed
+ by definition.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>replaces<td>default
+<tr><td colspan=3>output to be read by a person
+<tr><td><a href="#bodef0" name="bodef1">BOD_DEF</a>
+<td><a href="#bma8" name="bma7">b_mark</a> ,
+ <a href="#ben8" name="ben7">b_end</a> ,<br>&nbsp; &nbsp; b_group , line_li
+<td>' ' , 0 ,<br>&nbsp; &nbsp; <a href="#bgr4" name="bgr3">BIG_GROUP</a> ,
+ <a href="#lile4" name="lile3">LINE_LEN</a>
+<tr><td colspan=3>output to be read by a machine
+<tr><td><a href="#mcd0" name="mcd1">MC_DEF</a>
+<td><a href="#bma9" name="bma8">b_mark</a> ,
+ <a href="#ben9" name="ben8">b_end</a> ,
+<br>&nbsp; &nbsp; b_group , line_li
+<td><a href="#bmk6" name="bmk5">BIG_MARK</a> ,
+ <a href="#bien6" name="bien5">BIG_END</a> ,
+<br>&nbsp; &nbsp; <a href="#bgr0" name="bgr4">BIG_GROUP</a> , LINE_LEN
+</table>
+<p>In this table all the constants <tt>L</tt> will be <tt>LL</tt> if
+ required by the compiler.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>replaces<td>default
+<tr><td colspan=3>for <a href="#frG" name="frF">FRAC</a> > 0
+<tr><td><a href="#outd0" name="outd1">OUT_DEF</a>
+<br><a href="#hexd0" name="hexd1">HEX_DEF</a>
+<td>chip , mode , chfp , leadz , base
+<td align="right">0L &nbsp; ,  0 ,   0L , ' ' , 10
+<br><nobr>BNXICH , 0 , 0L , '0' , &nbsp;0</nobr>
+<tr><td colspan=3>for <a href="#frH" name="frG">FRAC</a> == 0
+<tr><td>OUT_DEF<br>HEX_DEF
+<td>chip , leadz , base
+<td>0L , ' ' , 10<br>0L , '0' , &nbsp;0
+</table>
+<p>Output command macros all use the macros described above. They are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>writing macro<td>base<td>to<td><a href="#bmaA" name="bma9">b_mark</a>
+<td>terminator<tr><td colspan=5>all these have no label
+<tr><td><a href="#cn_0" name="cn_1">cn_( x ) ;</a>
+<br><a href="#pr_0" name="pr_1">pr_( x ) ;</a>
+<br><a href="#ob_0" name="ob_1">ob_( x , sm ) ;</a>
+<br><a href="#om_0" name="om_1">om_( x , sm ) ;</a>
+<br><a href="#cx_0" name="cx_1">cx_( x ) ;</a>
+<br><a href="#px_0" name="px_1">px_( x ) ;</a>
+<br><a href="#obx_0" name="obx_1">obx_( x , sm ) ;</a>
+<br><a href="#omx_0" name="omx_1">omx_( x , sm ) ;</a>
+<td>decimal<br>decimal<br>decimal<br>decimal<br>0x hex<br>0x hex<br>0x hex
+<br>0x hex
+<td>stdout<br>stdprn<br>sm<br>sm<br>stdout<br>stdout<br>sm<br>sm
+<td>' '<br>' '<br>' '<br><a href="#bmk7" name="bmk6">BIG_MARK</a>
+<br>' '<br>' '<br>' '<br>BIG_MARK
+<td>0<br>0<br>0<br><a href="#bien7" name="bien6">BIG_END</a>
+<br>0<br>0<br>0<br>BIG_END</a>
+<tr><td colspan=5>these print the label sg into
+ <a href="#nln0" name="nln3">NAME_LEN</a> characters
+<tr><td><a href="#c2_0" name="c2_1">c2_( sg , x ) ;</a>
+<br><a href="#p2_0" name="p2_1">p2_( sg , x ) ;</a>
+<br><a href="#ob2_0" name="ob2_1">ob2_( sg , x , sm ) ;</a>
+<br><a href="#om2_0" name="om2_1">om2_( sg , x , sm ) ;</a>
+<br><a href="#cx2_0" name="cx2_1">cx2_( sg , x ) ;</a>
+<br><a href="#px2_0" name="px2_1">px2_( sg , x ) ;</a>
+<br><nobr><a href="#obx2_0" name="obx2_1">obx2_( sg , x , sm ) ;</a></nobr>
+<br><a href="#omx2_0" name="omx2_1">omx2_( sg , x , sm ) ;</a>
+<td>decimal<br>decimal<br>decimal<br>decimal<br>0x hex<br>0x hex<br>0x hex
+<br>0x hex
+<td>stdout<br>stdprn<br>sm<br>sm<br>stdout<br>stdout<br>sm<br>sm
+<td>' '<br>' '<br>' '<br><a href="#bmk0" name="bmk7">BIG_MARK</a>
+<br>' '<br>' '<br>' '<br>BIG_MARK
+<td>0<br>0<br>0<br><a href="#bien0" name="bien7">BIG_END</a>
+<br>0<br>0<br>0<br>BIG_END
+</table>
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#cinp0" name="cinp2">console input</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Two functions are provided to collect input from the keyboard. These are
+ called with&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td><a href="#kb23" name="kb22">kb_2_big</a> ( x ) ;
+<br><a href="#kb223" name="kb222">kb_2_big_2</a> ( x , base ) ;
+</table>
+<p>This rest of this section describes the input functions with a
+ <a href="#coni5" name="coni4">console interface</a> with
+ <tt><a href="#getcp2" name="getcp1">GET_C_POS</a></tt> included.
+ For a compilation without a console interface or without <tt>GET_C_POS</tt>
+ , please see the next section.
+<p>Both functions send a carriage return to the console at the end of a line.
+<p>The maximum number of characters that may be input from the keyboard is given
+ by the macro <tt><a href="#kbx0" name="kbx2">KB_CH</a></tt>&nbsp;. The default
+ for this is the lesser of the natural length plus characters for sign,
+ <tt>0x</tt> and point, or 5 lines of text in console. KB_CH may be given a
+ value by prior definition to override this.
+<p>The delete key works.  Any non parsing character is refused and if
+ <tt><a href="#nob0" name="nob3">NO_BELL</a></tt>
+ is not defined <tt>'\a'</tt> is sent to <tt>stdout</tt>.
+<p>The functions are type <tt>int</tt> . <tt>Enter</tt> or <tt>Return</tt> keys
+ take the entry to <tt>x</tt> and returns <tt>0</tt>&nbsp;. The <tt>Esc</tt> key
+ abandons the action and the function returns <tt>- 1</tt>&nbsp;.
+<p><tt>kb_2_big</tt> by default expects a
+ decimal entry. If <tt><a href="#nod0" name="nod6">NO_DEC</a></tt> is defined
+ it expects hex. <tt>kb_2_big_2</tt> is similar, it expects a number
+ according to the standard. Both functions always accept <tt>0x</tt> led hex.
+<p>The input length in characters is the shorter of either the natural length
+ plus characters for sign and point or five lines on the console.
+<p>If <tt><a href="#ush7" name="ush6">USE_HEAP</a></tt> is not defined then the
+ input length is fixed on the
+ initial console size and the definition of
+ <tt><a href="#pr0" name="prA">PREC</a></tt>&nbsp;.
+<p>If <tt>USE_HEAP</tt> is defined then the input length is adjusted by any
+ change in <tt><a href="#lile5" name="lile4">LINE_LEN</a></tt> and,
+ with <tt><a href="#ssz9" name="ssz8">SOFT_SIZE</a></tt> defined,
+ <tt><a href="#sprC" name="sprB">S_PREC</a></tt>&nbsp;.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#ciwi0" name="ciwi1">console input without a console
+ interface</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Both <tt><a href="#kb24" name="kb23">kb_2_big</a></tt> and
+ <tt><a href="#kb220" name="kb223">kb_2_big_2</a></tt> are available.
+<p>Without a console interface the keyboard input of big numbers is simple,
+ and without error checking.
+<p>A character array is defined of size equal to
+ <tt>( <a href="#lile6" name="lile5">LINE_LEN</a> + LINE_LEN + 1 )</tt>&nbsp;.
+ gets is used to collect keyboard characters into this array. The array is
+ submitted to the effective part of
+ <tt><a href="#numh0" name="numh4">num_here</a></tt>&nbsp;.
+<p>Two lines of text may be submitted if <tt>LINE_LEN</tt> is the size of the
+ monitor. If the input exceeds this then the program will lose control.
+<p>Conversion does its best with the string submitted. Errors are not reported
+ neither to the operator nor to the program.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#bitsh0" name="bitsh3">bit_show and
+ bits_out</a><td align="right">
+<a href="#contents">contents</a></table>
+<p><tt>bit_show ( x ) ;</tt> will put the bit pattern of <tt>x</tt> as ascii on
+ <tt>stdout</tt>&nbsp;. The function is type <tt>void</tt>&nbsp;.
+<p><tt>bits_out ( x , sz , sm ) ;</tt> sends the bit pattern of <tt>x</tt> to the
+ <a href="#beleC" name="beleB">element</a> length of <tt>sz</tt> as ascii to
+ the stream <tt>sm</tt>&nbsp;. The function is type
+ <tt><a href="#r_d6" name="r_d5">R_D</a></tt>&nbsp;, its
+ response to errors depends on the definition of
+ <tt><a href="#ermF" name="ermE">ERROR_MODE</a></tt>&nbsp;.
+<p><tt>bit_show</tt> calls <tt>bits_out</tt> .
+<p>The functions use the definition of
+ <tt><a href="#lile7" name="lile6">LINE_LEN</a></tt> and provide newlines
+ to fit. <tt>If LINE_LEN</tt> is set to <tt>0</tt> then no line breaks
+ are provided until one
+ at the end. If <tt><a href="#cle3" name="cle2">CLEOL</a></tt> is defined then
+ if output to the console this is used to clear the remains of each line.
+<p>The character used for a binary zero is the definition of
+ <tt><a href="#bb00" name="bb02">BIG_B_0</a></tt>&nbsp;. The point is the
+ definition of <tt><a href="#bbp0" name="bbp2">BIG_B_POINT</a></tt>&nbsp;.
+ <tt>1</tt> is always <tt>1</tt>&nbsp;.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#bcalc0" name="bcalc2">bigcalc.c</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p><tt>bigcalc.c</tt> is a test bed and demonstrator for the library.
+ All the functions reported here are available. All the defines that
+ <a href="#compi5" name="compi4">control compilation</a> may be used.
+<p>It takes the form of a calculator using numbers <tt>x</tt> and
+ <tt>y</tt>&nbsp;.
+<p>With a compilation using low precision the two numbers are displayed in ascii
+ and binary. As the precision is increased the components displayed are reduced.
+ With a console interface included this responds to changes of precision. In
+ <tt>ncurses</tt>, with a
+ <tt><a href="#ncurf3" name="ncurf2">ncurface.h</a></tt>
+ included this control responds also to changes of window size.
+<p>As precision increases when the number is too large to display it is
+ represented by four array elements shown in hex. These elements are in
+ order&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td width=100>top<td width=100>units
+<td width=100>top of<br>fraction<td width=100>bottom</table>
+<p>If memory is available <tt>bigcalc</tt> can process any size of numbers up
+ to the limit. Although the display is meagre these numbers may be saved as
+ text.
+<p>If a console interface is included then each command is one key depression.
+ Without a console interface each command must be followed by a carriage return.
+<p>Another consequence of missing the console interface is that the screen will
+ scroll to redraw after each command.
+<p>A minor consequence of no console interface is that keyboard entry of big
+ numbers using <tt><a href="#kb20" name="kb24">kb_2_big</a></tt>
+ is reduced to collecting the keyboard entry using
+ <tt>scanf</tt>&nbsp;.
+<p>The operating cycle uses two switch statements. The first is available for
+ the user's trial routines, all of which must be called by key entry of a
+ capital letter. This first switch sweeps up unused capitals in default and
+ masks them to lower case where they are used to give the inbuilt commands in
+ the second switch.
+<p>Users are encourged to try all conditions of compilation, change anything
+ and insert anything.
+
+<p class="u"><table width=95%><tr>
+<td><h2><a href="#coni0" name="coni5">console interface</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>To allow interaction through the console I provide interface files enable
+ different systems and standards to be used. Each interface file is appropriate
+ to one system.
+<p>It is not essential to use this feature, all the bign library test and ignore
+ any missing definitions. To use this the appropriate interface definition file
+ must be included before the body of
+ <tt><a href="#bli0" name="bliC">bign.lib</a></tt>&nbsp;.
+<p>The interface file may include any required system file.
+<p>The interface may be working with a window with any chosen characteristics.
+<p>All the files take positions relative to the top left corner which is
+ <nobr><tt>( 1 , 1 ) .</tt></nobr>
+<p>Two macros provide the size of the console in character lines and rows. In
+ <tt><a href="#conih2" name="conih1">coniface.h</a></tt> and
+ <tt><a href="#dosfh2" name="dosfh1">dosface.h</a></tt> these may be overridden
+ by prior definition. In <tt><a href="#ncurf4" name="ncurf3">ncurface.h</a></tt>
+ they are defined to system variables. They are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>content
+<tr><td><a href="#lile0" name="lile7">LINE_LEN</a>
+<br><a href="#crow0" name="crow2">CON_ROWS</a>
+<td>maximum number of characters in a line<br>maximum rows of text</table>
+<p>The active macros are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>effect
+<tr><td><a href="#iinit0" name="iinit1">IINIT</a>
+<br><a href="#iclos0" name="iclos1">ICLOSE</a>
+<br><a href="#getcp0" name="getcp2">GET_C_POS</a><br>&nbsp;<br>&nbsp;
+<br><a href="#svcp0" name="svcp1">SAVE_C_POS</a>
+<br><a href="#rcp0" name="rcp1">RESTORE_C_POS</a>
+<br><nobr><a href="#setcp0" name="setcp1">SET_C_POS_( row , column )</a></nobr>
+<br><a href="#cls0" name="cls1">CLS</a>
+<br><a href="#cle0" name="cle3">CLEOL</a>
+<br><a href="#cllw0" name="cllw1">CLLOW</a>
+<br><a href="#getch0" name="getch1">GET_CH</a>
+<br><a href="#getche0" name="getche1">GET_CHE</a>
+<br><a href="#kbqq0" name="kbqq1">KBQQ</a><br>&nbsp;
+<td>initialise console control
+<br>end console control
+<br>returns the cursor position as an unsigned int
+<br>&nbsp; considered as two halves 
+<br>&nbsp; the high half is the row , low is the column .
+<br>save cursor position to y_pos and x_pos
+<br>restore cursor position using y_pos , x_pos
+<br>set cursor position to row , column<br>clear screen<br>clear to end of line
+<br>clear below<br>gets character from keyboard<br>GET_CH with echo to stdout
+<br><nobr>key depression available for GET_CH or GET_CHE
+<br>&nbsp; returns 1 for yes , 0 for no</nobr>
+</table>
+
+<p>For use with the value from <tt>GET_C_POS</tt> there are two macros for
+ unpicking the line and character positions. These are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>delivers from GET_C_POS<br>or an assignment of this
+<tr><td><a href="#readln0" name="readln1">READ_LINE( A )</a>
+<br><a href="#readps0" name="readps1">READ_POS( A )</a>
+<td>row, that is the position in y
+<br>column, that is position in x
+</table>
+<p>For testing keystrokes there are two definitions that users must use for
+ compatibility with all interfaces. These are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>definition<td>set to value for
+<tr><td><a href="#entrk0" name="entrk1">ENTER_K</a>
+<br><a href="#baksp0" name="baksp1">BACK_SP</a>
+<td>Enter<br>Backspace
+</table>
+<p>Two global <tt>int</tt> variables are provided in the console interfaces.
+ These are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>variable<td>contains saved cursor position for
+<tr><td><a href="#xpo0" name="xpo1">x_pos</a>
+<br><a href="#ypo0" name="ypo1">y_pos</a>
+<td>x<br>y
+</table>
+<p>These values are set by <tt>SAVE_C_POS</tt> and used by <tt>SET_C_POS</tt>
+&nbsp;. A user may read or write to these. They are not affected by
+ <tt>SET_C_POS</tt>&nbsp;. Any library function that uses save and restore
+ leaves these values unchanged.
+<p>These are appropriately defined and supported in the files listed here
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>file name<td>use with
+<tr><td><a href="#dosfh0" name="dosfh2">dosface.h</a>
+<br><a href="#conih0" name="conih2">coniface.h</a>
+<br><a href="#ncurh0" name="ncurh1">ncurface.h</a>
+<td>MS-DOS<br>conio.h<br>ncurses</table>
+<p>I view these interfaces as the property of the user. Please adapt yours as
+ necessary.
+<p>When using any of these if there is a chance that the application will be
+ compiled both with and without a console interface file included, then it
+ will be essential to precede and follow each use with
+ <nobr><tt>#ifdef ... .... #endif </tt></nobr>.
+<p>Before using any of these please check each of the definitions for
+ compatibility with the compiler to be used.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#ncurf0" name="ncurf4">ncurface.h</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Compared to standard C , <tt>ncurses</tt> uses a different repertoire of
+ commands to reference the console.
+<p>To allow compilation from a common source I provide parameterized macros of
+ the <tt>stdio.h</tt> commands to define some of the printing functions. That
+ requires that in standard C the for these functions, the name is adjacent to
+ the opening bracket.
+<p>The functions with conversion by macro are&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>putchar<br>putc<br>fputc<br>printf<br>fprintf<br>scanf<br>fscanf
+<br>gets<br>fflush</table>
+<p>All console referencing code in the library complies. 
+<p>The functions that reference a stream are converted for <tt>ncurses</tt> only
+ if the stream is <tt>stdout</tt>&nbsp;. Any other stream is referenced
+ without change.
+<p><tt>ncurface.h</tt> does not include <tt>KBQQ</tt>&nbsp;. This is not used
+ by the library, but I will need it for another project.
+
+<p class="u"><table width=95%><tr>
+<td><h2 class="z"><a href="#bacc0" name="bacc5">big_acc.lib</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Three accessory files are provided for use with bign. These
+ provide&nbsp;:
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>file name<td>provides<td>current version
+<tr><td><a href="#root3" name="root2">big_root.lib</a>
+<br><a href="#blog5" name="blog4">biglog.lib</a>
+<br><a href="#blig5" name="blig4">bigtrig.lib</a>
+<td>square root<br>exp, log and e
+<br><nobr>trig and inverse functions and ( pi * factor )</nobr>
+<td>1.1.0<br>1.0.0<br>1.1.0
+</table>
+<p>These files are described in their own sections below.
+<p>The three files are delivered together in <tt>big_acc.lib</tt>&nbsp;. This
+ may be included to provide all three accessories. Alternatively by cutting
+ within this at the dotted lines separate files may be produced, each
+
+
+
+
+
+
+ should have its given name.
+<p>The files are each protected against multiple inclusion.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#root4" name="root3">bigroot.lib</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The function works in all possible compilations.
+<p>This provides one function :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+
+<tr><td>function call<td>result<td>memory take
+<tr><td><nobr><a href="#root0" name="root4">big_root ( x , y ) ;</a></nobr>
+<td><nobr>y = square root of x</nobr>
+<td align="center"><nobr>4 + ( x == y )</nobr>
+</table>
+<p>Zero and all possible positive numbers are accepted.
+<p>Return type is <tt><a href="#r_d7" name="r_d6">R_D</a></tt> , giving response
+ to a negative source as required by the definition of
+ <tt><a href="#ermG" name="ermF">ERROR_MODE</a></tt>&nbsp;.
+<p>In a compilation with <tt><a href="#sigA" name="sig9">SIGNED</a></tt>
+ set to zero there is no possibility of error.
+
+<p><tt>big_root</tt> uses Newton's routine.
+<p>If <tt><a href="#frI" name="frH">FRAC</a></tt> or
+ <tt><a href="#bro0" name="bro5">B_ROUND</a></tt> are defined to
+ <tt>0</tt> then an imprecise answer
+ is always rounded down from the true value.
+<p>If <tt>FRAC</tt> and <tt>B_ROUND</tt> is not zero then an imprecise answer
+ will be rounded so that the square of the root given is the closest possible
+ to the source value.
+<p>With <tt>B_ROUND</tt> and <tt><a href="#sszA" name="ssz9">SOFT_SIZE</a></tt>
+ defined if <tt><a href="#sfr8" name="sfr7">s_frac</a></tt>
+is set to <tt>0</tt> this rounding is still applied.
+<p>If <tt><a href="#btr5" name="btr4">BIG_TRACE</a></tt> is defined,
+ output is a <tt>'v'</tt> put on
+ <tt><a href="#trs6" name="trs5">TR_SM</a></tt>&nbsp;.
+<p>With <tt><a href="#mduf0" name="mduf5">MDUF</a></tt> defined, the smaller the
+ value in <tt><a href="#divuf0" name="divuf2">divuf</a></tt> the greater
+ the chance of an error of <tt>1</tt> in the least significant place.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#blog6" name="blog5">biglog.lib</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If included, this is compiled only when
+ <a href="#sigB" name="sigA"><tt>SIGNED</tt></a>
+ and <a href="#frJ" name="frI"><tt>FRAC</tt></a> are defined greater than
+ <tt>0</tt>&nbsp;. If used with
+ <a href="#sszB" name="sszA"><tt>SOFT_SIZE</tt></a>
+ defined then <a href="#sfr9" name="sfr8"><tt>S_FRAC</tt></a>
+ must never be set to <tt>0</tt>&nbsp;.
+<p>If <tt><a href="#root4" name="root3">bigroot.lib</a></tt>
+ is not already included this pulls it in.
+<p>This macro definition
+ <a href="#compi6" name="compi5">controls compilation</a> :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>default<td>controls
+<tr><td><a href="#efil2" name="efil1">E_FILENAME</a>
+<td>"<a href="#e4" name="e3">big_e.txt</a>"
+<td>file path, name and quotes for big_e
+</table>
+<p>The functions available are :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>function call<td>result<td>memory<br>take
+<tr><td><a href="#e2x3" name="e2x2">e_2_x ( x , y ) ;</a>
+<br><a href="#log3" name="log2">log_e ( x , y )</a> ;
+<br><a href="#gete2" name="gete1">get_e ( ) ;</a>
+<td>y = e<sup>x</sup><br>y = log<sub>e</sub> ( x )
+<br><a href="#e5" name="e4">big_e</a>
+<td>5 + big_e<br>6 + big_e<br>1 stays
+</table>
+<p>All three functions are of return type
+ <tt><a href="#r_d8" name="r_d7">R_D</a></tt> . They respond as required by
+<tt><a href="#ermH" name="ermG">ERROR_MODE</a></tt>&nbsp;.
+<p>The functions here use a constant value of e . This must be available to
+ an executable using the definition of
+ <tt><a href="#efil3" name="efil2">E_FILENAME</a></tt> . Processing a number
+ with a large i-p requires a f-p that covers the active precision required.
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#e2x0" name="e2x3">e_2_x</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>This function hides the i-p of the source and expands the f-p with :</p>
+<ul><p><tt>e <sup>x</sup> = 1 + x + x <sup>( 2 / 2 ! )</sup> +
+ x <sup>( 3 / 3 ! )</sup> + &nbsp; .......</tt></p></ul>
+
+<p>Using <tt><a href="#e6" name="e5">big_e</a></tt> , it multiplies the
+ value obtained to binary powers of e that match the set bits in
+ the source i-p&nbsp;.
+<p>The routine gives precision roughly equal to the length of the f-p ,
+ less computational error.
+<p>With <tt><a href="#btr6" name="btr5">BIG_TRACE</a></tt>
+ defined the trace output is :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>action<td>trace out<td>notes
+<tr><td>start<br>during f-p expansion
+<br><a href="#gete3" name="gete2">get_e</a>
+<br>before i-p expansion<br>done
+<td>"\ne_2_x [ e ^ f-p : "<br>count<br>E
+<br>" e ^ n i-p : " integer<br>" ]\n"
+<td align="center">.<br>1<br>2<br>3<br>.
+</table>
+<p>The notes are :<ul>
+1 &nbsp; active every cycle during run only with
+ <tt><a href="#trs7" name="trs6">TR_SM</a> == stdout</tt>
+<br> &nbsp; &nbsp; otherwise a single number at completion
+<p>2 &nbsp; with <tt><a href="#sli4" name="sli3">SHO_LEAD_IN</a></tt>
+ defined , hunt text from the file
+ follows when <tt><a href="#e7" name="e6">big_e</a></tt> is loaded
+<p>3 &nbsp; value is a single output
+</p></ul>
+<p>Depending on the definition of
+ <tt><a href="#ermI" name="ermH">ERROR_MODE</a></tt>
+ the function responds to :</p>
+<ul><p>o-f in the answer<br>no access to the file <tt>big_e</tt></p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#log0" name="log3">log_e</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>This function first reduces the source to just greater than 1.0 as
+ a sweet value for the expansion.
+<p>It does this by :</p><ul>
+<p>extracting all values of e using <tt><a href="#e8" name="e7">big_e</a></tt>
+ to find the exponent for a target greater than 1.0
+<br>repeatedly taking the square root until the source is narrowly placed
+<br>expanding the series below</p></ul>
+<p>The routine used is</p><ul>
+<p>if <tt>x = n / ( n - 1 )</tt> , so <tt>n = x / ( x - 1 )</tt>
+<br><tt>log_e ( x )
+<nobr>= 2 ( 1 / 1 ( 2n - 1 )<sup>1</sup>  + 1 / 3 ( 2n - 1 )<sup>3</sup>
+ + 1 / 5 ( 2n - 1 )<sup>5</sup></nobr>
+<nobr>&nbsp; ..... )</nobr></tt></p></ul>
+<p>After this routine the number given is :<ul>
+<p>shifting up by one bit for every square root taken
+<br>adding the integer number of e extracted</ul>
+<p>The shift up adds several bits of imprecision.
+<p>With <tt><a href="#btr7" name="btr6">BIG_TRACE</a></tt>
+ defined the trace output is :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>action<td>trace out<td>notes
+<tr><td>start<br><a href="#gete4" name="gete3">get_e</A>
+<br>extract log i-p
+<br>final adjust, multiply<br>final adjust, divide
+<br>every square root
+<br>before loop<br>execution<br>done
+<td>"\nlog_e [ "<br>'E'<br>"e ^ i-p : " integer
+<br>'*'<br>'/'<br>'v'<br>"e ^ f-p :"<br>cycle count<br>" ]\n"
+<td>.<br>1<br>.<br>.<br>.<br>.<br>.<br>2<br>.
+</table>
+<p>The notes are :<ul>
+<p>1 &nbsp; with <tt><a href="#sli5" name="sli4">SHO_LEAD_IN</a></tt> defined ,
+ hunt text from the file follows when <tt><a href="#e9" name="e8">big_e</a></tt>
+ is loaded<br>2 &nbsp; active every cycle during run only with
+ <tt><a href="#trs8" name="trs7">TR_SM</a> == stdout</tt>
+</p></ul>
+<p>On the definition of <tt><a href="#ermJ" name="ermI">ERROR_MODE</a></tt>
+ the function responds to :</p>
+<ul><p>a source equal to zero or negative<br>to o-f in the answer
+<br>no access to the file <tt>big_e.txt</tt></p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#e0" name="e9">big_e</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>Both of the <tt><a href="#blog0" name="blog6">biglog.lib</a></tt>
+ functions use a big number with the value of e&nbsp;.
+ This is held on the <a href="#ush9" name="ush8">heap</a>. It may be
+ accessed by a global pointer named <tt>big_e</tt>&nbsp;.
+<p>To be sure that <tt>big_e</tt> is loaded the user calls
+ <nobr><tt><a href="#gete5" name="gete4">get_e ( ) ;</a></tt> .</nobr>
+<p>The type of <tt><a href="#gete0" name="gete5">get_e</a></tt>
+ is int if the definition of
+ <tt><a href="#ermK" name="ermJ">ERROR_MODE</a></tt>
+ requires a return. It responds to a loading error as defined by
+ <tt>ERROR_MODE</tt>&nbsp;. It
+ returns zero if it is called and either
+ <tt>big_e</tt> is already loaded or if the load is successful.
+<p>If <tt><a href="#sszC" name="sszB">SOFT_SIZE</a></tt>
+ is defined then if e is already loaded <tt>get_e</tt>
+ tests if the big number sizes are changed from when e was loaded. If there
+ has been a change then the <a href="#ushA" name="ush9">heap</a> memory
+ is reclaimed and e is reloaded to the new size. So if e is to be used
+ with SOFT_SIZE defined then <nobr><tt>get_e ( ) ;</tt></nobr> must be
+ called after every change of size.
+<p>The value is loaded from a text file of e that has to be
+ accessible at run time. The name is the definition of
+ the macro <tt><a href="#efil0" name="efil3">E_FILENAME</a></tt>&nbsp;.
+ If the file is not in the default directory then <tt>E_FILENAME</tt> can
+ carry the address.
+<p>This file <tt>big_e.txt</tt> is provided as part of the library.
+<p>The standards for the <tt>big_e.txt</tt> file are
+ <tt><a href="#bmaB" name="bmaA">b_mark</a></tt> and
+ <tt><a href="#benA" name="ben9">b_end</a></tt> set to <tt>10</tt>&nbsp;.
+<p>The precision of the f-p of the number in file must be adequate for the
+ precision of the f-p to be used. <tt>big_e.txt</tt> is provided with
+ 64000 hex characters. This is sufficient for a
+ <a href="#frK" name="frJ"><tt>FRAC</tt></a> of up to
+ <nobr><tt><a href="#esz4" name="esz3">E_SZ( 16001 , 8000 )</a></tt> .</nobr>
+ If the file provided is unnecessarilly long it may be truncated.
+<p>Provided with the suite is a program
+ <tt><a href="#mke0" name="mke2">make_e.c</a></tt> . This may be used
+ to provide a <tt>big_e.txt</tt> of any required size. It is fast, less than a
+ minute for 130,000 hex characters. The relative time required is roughly
+ proportional to the square of the f-p size. Beware of accidentally overwriting
+ <tt>big_e.txt</tt>&nbsp;.
+<p>To free the memory of <tt>big_e</tt> the command needed is a macro :</p>
+<ul><p><tt>FREE_BIG_E ;</tt></p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h2 class="z"><a href="#blig6" name="blig5">bigtrig.lib</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>If included, this is compiled only when
+ <a href="#sigC" name="sigB"><tt>SIGNED</tt></a>
+ and <a href="#frL" name="frK"><tt>FRAC</tt></a> are defined greater than
+ <tt>0</tt>&nbsp;. If used with
+ <a href="#sszD" name="sszC"><tt>SOFT_SIZE</tt></a>
+ defined then <a href="#sfrA" name="sfr9"><tt>S_FRAC</tt></a>
+ must never be set to <tt>0</tt>&nbsp;.
+<p>If included this file is compiled only when the compilation is
+ <a href="#sig0" name="sigC"><tt>SIGNED</tt></a> and with
+ a fraction-part.
+<p>If <tt><a href="#root0" name="root4">bigroot.lib</a></tt>
+ is not already included this pulls it in.
+<p>There are two macro definitions that
+ <a href="#compi0" name="compi6">control compilation</a> :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>macro<td>default<td>controls
+<tr><td><a href="#pif2" name="pif1">PI_FILENAME</a>
+<br><a href="#mend2" name="mend1">MEND_PART</a>
+<td>"<a href="#pin2" name="pin1">pix.txt</a>"<br>64
+<td>path, name and quotes for file to <a href="#pi3" name="pi2">pion840</a>
+<br><nobr>calculation error > 1.000 ... , for
+ <a href="#t13" name="t12">limit_one</a></nobr>
+</table>
+<p>These functions are provided :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>function call<td>result<td>return type<td>memory<br>take
+<tr><td><a href="#bsin2" name="bsin1">big_sin ( x , y ) ;</a>
+<br><a href="#bcos2" name="bcos1">big_cos ( x , y ) ;</a>
+<br><a href="#btan1" name="btan0">big_tan ( x , y ) ;</a>
+<br><nobr><a href="#bisin1" name="bisin0">b_inv_sin ( x , y ) ;</a></nobr>
+<br><a href="#bicos2" name="bicos1">b_inv_cos ( x , y ) ;</a>
+<br><a href="#bitan2" name="bitan1">b_inv_tan ( x , y ) ;</a>
+<br><a href="#pi4" name="pi3">pion840 ( i ) ;</a>
+<br><a href="#t14" name="t13">limit_one ( x ) ;</a>
+
+<td>y = sin ( x )<br>y = cos ( x )<br>y = tan ( x )
+<br>y = inv sin ( x )<br>y = inv cos ( x )<br>y = inv tan ( x )
+<br><nobr><a href="#pimem3" name="pimem2">pi_mem</a> = pi * i / 840</nobr>
+<br>see below
+<td>void<br>void<br><a href="#r_d0" name="r_d8">R_D</a>
+<br>R_D<br>R_D<br>void<br>int<br>int
+<td align="center"><nobr>5 + pi_mem</nobr><br>5 + pi_mem<br>6 + pi_mem
+<br>7<br>7 + pi_mem<br>6<br>1 stays<br>.
+</table>
+<p>These routines are described under the two following sub sections as
+ <a href="#fwdt2" name="fwdt1">forward trig functions</a>&nbsp;,
+ from angle to value, and
+ <a href="#invt2" name="invt1">inverse trig functions</a>.
+<p>The functions here use a constant value of pi . Processing numbers with a
+ large i-p requires a f-p that covers the active precision required.
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#fwdt3" name="fwdt2">forward trig functions</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The series expansion for sin ( x ) is the same as the expansion for cos ( x )
+ except that the operations start with different initial values. The expansion
+ is provided in a routine called <tt>bn_sico</tt> . All three forward functions
+ use this.
+<p>The dependancy is shown here :</p>
+<ul><p><tt><a href="#bsin3" name="bsin2">big_sin</a>&nbsp;
+ <a href="#bcos3" name="bcos2">big_cos</a>&nbsp;
+ <a href="#btan2" name="btan1">big_tan</a>
+<pre>      \    |    /
+       \   |   /
+        \  |  /
+        bn_sico</pre></tt></p></ul>
+<p><tt>big_sin</tt> and <tt>big_cos</tt> call <tt>bn_sico</tt> with no
+ preparation. <tt>big_cos</tt> follows this call by subtracting
+ <nobr><tt>( pi / 2 )</tt></nobr> from the <tt>sin</tt> returned by
+ <tt>bn_sico</tt>&nbsp;.
+<p><tt>big_tan</tt> finds the quadrant by taking the modulus
+ <nobr><tt>( pi / 2 )</tt> .</nobr> It calls <tt>bn_sico</tt> to find the
+ sin&nbsp;, then by Pythagorus it finds the tan&nbsp;, and assigns
+ the sign. It gives an error response if the tan overflows the i-p
+ of the big number definition.
+<p><tt>bn_sico</tt> can accept any angle. If the source is equal to or
+ greater than <tt>4</tt> then it uses
+ <tt><a href="#pi5" name="pi4">pion840</a></tt> to take the modulus
+ <nobr><tt>( 2 * pi )</tt> .</nobr> It uses the standard
+ expansion to return sin or cos&nbsp;.
+<p>At completion bn_sico calls <tt><a href="#t15" name="t14">limit_one</a></tt>
+ to correct any computational error that has given an answer greater
+ than <tt>1.000&nbsp;...</tt>&nbsp;. It uses the tolerance defined
+ by <a href="#mend3" name="mend2"><tt>MEND_PART</tt></a> .
+<p><tt><a href="#bsin4" name="bsin3">big_sin</a></tt> and
+ <tt><a href="#bcos4" name="bcos3">big_cos</a></tt> are both
+ <tt>void</tt>&nbsp;.
+<p>All these routines produce an effective precision roughly equal to the
+ length of the f-p.
+<p>With <tt><a href="#btr8" name="btr7">BIG_TRACE</a></tt>
+ defined each user call to an forward trig function
+ produces a newline output to
+ <tt><a href="#trs9" name="trs8">TR_SM</a></tt> before execution and another
+ after completion immediately before the return. The trace
+ outputs are described in these four tables. Working down the tables the
+ trace outputs are seen as nested.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3><a href="#bsin0" name="bsin4">big_sin</a>
+<tr><td>action<td>trace out<td>comment
+<tr><td>start<br>bn_sico is called<br>done
+<td>"\nbig_sin [ "<br>&nbsp;<br>" ]\n"
+<td>.<br>as below<br>.
+
+</table>
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3><a href="#bcos0" name="bcos4">big_cos ( x , y ) ;</a>
+<tr><td>action<td>trace out<td>comment
+<tr><td>start<br>bn_sico is called<br>done
+<td>"\nbig_cos [ "<br>&nbsp;<br>" ]\n"
+<td>.<br>as below<br>.
+</table>
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3><a href="#btan0" name="btan2">big_tan ( x , y ) ;</a>
+<tr><td>action<td>trace out<td>notes and comment
+
+<tr><td>start<br>establish quadrant
+<br>bn_sico is called<br>convert to tan<br>done
+<td>"big_tan [ "<br>'P'<br>&nbsp;<br>'v'<br>" ]"
+<td>.<br>1<br>as below<br>.<br>.
+</table>
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3>bn_sico
+<tr><td>action<td>trace out<td>notes
+<tr><td>start<br>x = x % ( 2 * pi )<br>expand series
+<br><a href="#t16" name="t15">limit_one</a> corrects excess
+<td>"bn_sico "<br>'P' '%'<br>count<br>'!'
+<td>.<br>2<br>3<br>4
+</table>
+<p>The notes for all four forward trig tables are :<ul>
+1 &nbsp; plus <tt><a href="#pi6" name="pi5">pion840</a></tt>
+ hunt text at the first call of
+ <tt>pion840</tt> if <tt><a href="#sli6" name="sli5">SHO_LEAD_IN</a></tt>
+ is defined<br>2 &nbsp; if x > 6
+<br>3 &nbsp; active on every cycle if
+ <tt><a href="#trsA" name="trs9">TR_SM</a></tt>
+ is defined to <tt>stdout</tt>
+<br>4 &nbsp; trace character sent when > 1.00... occurs
+</p></ul>
+
+<p class="u"><table width=95%><tr>
+<td><h3><a href="#invt3" name="invt2">inverse trig functions</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>All three reverse functions use the standard expansion
+ for inverse ( tan )&nbsp;. This is in a function called
+ <tt>rawinv_tan</tt>&nbsp;.
+<p>The dependancy is shown here :</p>
+<ul><p><tt><pre>
+      <a href="#bicos3" name="bicos2">b_inv_cos</a><!--- nl
+
+--->   <a href="#bisin3" name="bisin2">b_inv_sin</a>
+           \         |
+            \        |
+             \       |
+ <a href="#bitan3" name="bitan2">b_inv_tan</a>  rawinv_sin
+         \      |
+          \     |
+           \    |
+         rawinv_tan</pre></tt></p></ul>
+<p><tt>b_inv_tan ( x , y ) ;</tt> is for normal use.
+<p>A call through <tt>rawinv_sin</tt> uses Pythagorus to convert
+ the source, assumed to be the sin, to the tan.
+<p>If <tt><a href="#ermL" name="ermK">ERROR_MODE</a> < 2</tt> and
+ <tt>BIG TRACE</tt> is not defined then
+ <tt><a href="#bisin2" name="bisin1">b_inv_sin ( x , y ) ;</a></tt>
+ is merged into
+ <tt>rawinv_sin</tt> and <tt>rawinv_sin</tt> is defined to
+ <tt>b_inv_sin</tt>&nbsp;.
+<p>After the call
+ <tt><a href="#bicos4" name="bicos3">b_inv_cos ( x , y ) ;</a></tt>
+ subtracts
+ <nobr><tt>( pi / 2 )</tt></nobr> from the returned angle to give the
+ sin&nbsp;.
+<p>The answers from the inverse trig functions are within
+ these ranges. For an answer that should be close to one of these
+ limits calculation error may cross the boundary.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>function<td align="center">range
+<tr><td>b_inv_sin<br>b_inv_cos<br>b_inv_tan
+<td align="center">- ( pi / 2 ) to + ( pi / 2 )
+<br>0 to pi
+<br>- ( pi / 2 ) to + ( pi / 2 )
+</table>
+<p><tt><a href="#bisin4" name="bisin3">b_inv_sin ( x , y ) ;</a></tt> and
+ <tt><a href="#bicos5" name="bicos4">b_inv_cos ( x , y ) ;</a></tt>
+ will give an error response
+ if the source is outside the range <tt>-&nbsp;1</tt> to <tt>+&nbsp;1</tt>
+ plus the allowed tolerance of the source in
+ <tt><a href="#t17" name="t16">limit_one</a></tt>
+ using the definition of
+ <tt><a href="#mend4" name="mend3">MEND_PART</a></tt>&nbsp;.
+<p>If the source to <tt>b_inv_sin</tt> is equal or close to <tt>1.000 ...</tt>
+ giving a possibility that <nobr><tt>( sin / cos )</tt></nobr> will overflow
+ the i-p . To prevent this, high values of sin cause the source to be reduced
+ for half the angle. If this correction was applied, after the call to
+ <tt>rawinv_tan</tt> the angle is doubled.
+<p><tt>rawinv_tan</tt> reduces the source value by finding the tan of half
+ the angle. It does this repeatedly until a small value is obtained, defined as
+ <nobr><tt><a href="#ntop0" name="ntop2">ntop ( x )</a> &lt; - log<font
+ size=-1>2</font> ( <a href="#sfrB" name="sfrA">S_FRAC</a> ) .</tt></nobr>
+ After the standard expansion it
+ shifts the angle up by one bit for every halving in the preparation. The loss
+ of precision can be seen with
+ <tt><a href="#btr9" name="btr8">BIG_TRACE</a></tt> defined, a <tt>'v'</tt>
+ appears for every cycle of angle halving, representing one bit lost.
+<p>Unrestrained the angle halving process could overflow if the i-p is just one
+ <a href="#beleD" name="beleC">element</a>, so under that condition a limit is
+ put on the angle halving. With large values of
+ <a href="#sfrD" name="sfrB">S_FRAC</a> the outcome can be different
+ process and different and computational errors depending on whether there is a
+ i-p of one element or more or difference between element sizes.
+<p>All three functions are unbreakable, except that they all use
+ <tt><a href="#pi7" name="pi6">pion840</a></tt>&nbsp;. They each give error
+ response if this fails.
+<p>With <tt><a href="#btr0" name="btr9">BIG_TRACE</a></tt>
+ defined each user call to an inverse trig function
+ produces a newline output to
+ <tt><a href="#trsB" name="trsA">TR_SM</a></tt> before execution and another
+ after completion immediately before the return. The inverse trace
+ outputs are described in these three tables. Working down the tables the
+ trace outputs are seen as nested.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3><a href="#bicos0" name="bicos5">b_inv_cos ( x , y ) ;</a>
+<tr><td>action<td>trace out<td>notes
+<tr><td>start<br>call <a href="#bitan4" name="bitan3">b_inv_tan ( x , y ) ;</a>
+<br>subtraction of ( pi / 2 )<br>done
+<td>"b_inv_cos [ "<br>&nbsp;<br>'P'<br>" ]"
+<td align="center">.<br>as below<br>1<br>.
+</table>
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3><a href="#bisin0" name="bisin4">b_inv_sin ( x , y ) ;</a>
+<tr><td>action<td>trace out<td>notes
+<tr><td>start<br>limit_one corrects x > 1.000 ...
+<br>conversion to cos
+<br>halve angle<br>b_inv_tan is called
+<br>done
+<td>"b_inv_sin [ "<br>'!'<br>'v'<br>'H'<br>&nbsp;<br>" ]"
+<td align="center">.<br>2<br>.<br>3<br>as below<br>.
+</table>
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td colspan=3><a href="#bitan0" name="bitan4">b_inv_tan ( x , y ) ;</a>
+<tr><td>action<td>trace out<td>notes
+<tr><td>start<br>every halve angle
+<br>count of expansion cycles
+<br>done
+<td>"b_inv_tan [ "<br>'v'<br>count<br>" ]"
+<td align="center">.<br>.<br>4<br>.
+</table>
+<p>The notes for all three inverse trig tables are :<ul>
+<p>1 &nbsp; plus <tt><a href="#pin3" name="pin2">pix.txt</a></tt> hunt text at
+ the first call of <tt><a href="#pi8" name="pi7">pion840</a></tt> if
+ <tt><a href="#sli0" name="sli6">SHO_LEAD_IN</a></tt> is defined
+<br>2 &nbsp; absent if no correction
+<br>3 &nbsp; if source was near to 1.000 ...
+<br>4 &nbsp; active on every cycle if
+ <tt><a href="#trs0" name="trsB">TR_SM</a></tt>
+ is defined to <tt>stdout</tt></p></ul>
+<p class="u"><table width=95%><tr>
+
+<td><h3 class="z"><a href="#pi0" name="pi8">pion840</a> and
+ <a href="#pimem0" name="pimem3">pi_mem</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>The <tt><a href="#blig7" name="blig6">bigtrig.lib</a></tt> functions use
+ a big number called <tt>pi_mem</tt> that offers the value of a fractional
+ factor times pi&nbsp;.
+<p><tt>pion840</tt> is a function that sets <tt>pi_mem</tt> to pi times the
+ factor requred. The numerator of the fraction is always <tt>840</tt>&nbsp;.
+<p>Calling <tt>pion840</tt> adjusts <tt>pi_mem</tt>
+ to <tt>( pi / 840 )</tt>&nbsp;. Examples are here :
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>call<td>sets pi_mem to
+<tr><td>pion840 ( 840 ) ;<br>pion840 ( 1050 ) ;
+<td>pi<br>( 5 / 4 * pi )
+</table>
+<p>With <tt>USE_TRACE</tt> defined, a call to <tt>pion840</tt> puts <tt>'P'</tt>
+ on the <tt>TR_SM</tt> .
+<p><tt>pi_mem</tt> is always on the <a href="#ushB" name="ushA">heap</a>.
+<p>When <tt>pion840</tt> is called if pi is not loaded then it is pulled
+ in from a text file with a default name
+ <a href="#pin0" name="pin3">pix.txt</a>&nbsp;. This file contains the hex
+ value of pi to cover
+ <nobr><tt>( <a href="#spr0" name="sprC">S_PREC</a> + 1 )</tt></nobr>&nbsp;.
+ That is the f-p plus at least one
+ <a href="#beleE" name="beleD">element</a>&nbsp;.
+<p>This file, <tt>pix.txt</tt> , is provided as part of the library.
+<p>The called name of this file may be changed by defining the macro
+ <tt><a href="#pif0" name="pif2">PI_FILENAME</a></tt>&nbsp;. This can include
+ the path if that is required for access. The target has to be present.
+<p>If <a href="#ssz0" name="sszD"><tt>SOFT_SIZE</tt></a>
+ is defined then if pi is already loaded a call for <tt>pion840</tt>
+ tests if the big number sizes defined by <tt>S_PREC</tt> and
+ <tt><a href="#sfrE" name="sfrD">S_FRAC</a></tt> are changed. If there
+ has been a change then the <a href="#ush0" name="ushB">heap</a> memory is
+ reclaimed, new heap is taken and pi is reloaded to the new size.
+<p>The standards for the <tt>pix.txt</tt> file are
+ <tt><a href="#bma0" name="bmaB">b_mark</a></tt> and
+ <tt><a href="#ben0" name="benA">b_end</a></tt>
+ set to <tt>10</tt>&nbsp;.
+<p>The length of the number in <tt>pix.txt</tt> must be adequate for the
+ precision of the f-p to be used plus at least one
+ <a href="#beleF" name="beleE">element</a>&nbsp;.
+ <tt>pix.txt</tt> is provided with 64008 hex characters, sufficient for a
+ <a href="#fr0" name="frL"><tt>FRAC</tt></a> of up to
+ <nobr><tt><a href="#esz0" name="esz4">E_SZ( 16001 , 8000 )</a></tt></nobr>
+ elements. The C program
+ <tt><a href="#mpi0" name="mpi2">make_pi.c</a></tt>
+ can be used to make longer versions.
+<p>When creating a pi be cautious about the time this will take. The time
+ needed is roughly proportional to f-p length raised to the power of
+ <tt>2.8</tt>&nbsp;. Start with a f-p of <tt>1000</tt> elements, and beware of
+ accidentally overwriting <tt>pix.txt</tt>&nbsp;.
+<p>If the file provided is unnecessarilly long it may be truncated. The pix.txt
+ comes with 100 hex characters to each line.
+<p>The type of <tt>pion840</tt> is int if the definition of
+ <tt><a href="#erm0" name="ermL">ERROR_MODE</a></tt>
+ requires a return. It responds to a loading error or an <tt>i</tt> of zero
+ as defined by <tt>ERROR_MODE</tt> or returns
+ zero on success.
+<p>Provided that the source file, <tt>pix.txt</tt> gives adequate digits for the
+ compilation then all factors of pi produced are accurate to the last bit.
+<p>To free the memory and reset control a user may call the macro
+ <tt><a href="#freep0" name="freep1">FREE_PI_MEM</a></tt> . This may be
+ used if the value in pi_mem has been corrupted by any change other than a
+ call to <tt>pion840</tt>&nbsp;. After using <tt>FREE_PI_MEM</tt> a call to
+ <tt>pion840</tt> acts as the first call, it loads from file and sets to
+ the required factor.
+<p><tt>FREE_PI_MEM</tt> is silent if called when the memory is not taken.
+<p>Negative values for <tt>i</tt> delivers a negative factor of pi&nbsp;.
+<p>A user cannot test if there is a pi in memory. Calling <tt>pion840</tt>
+ does everything that could be needed.
+<p>All the <tt><a href="#blig0" name="blig7">bigtrig.lib</a></tt>
+ functions that are described in
+ <a href="#fwdt0" name="fwdt3">forward trig functions</a>
+ and <a href="#invt0" name="invt3">inverse trig functions</a> use
+ <tt>pi_mem</tt> , and then leave it as they found it. A user mixing use
+ of <tt>pion840</tt> with the trig functions will find no change to the
+ value after library calls.
+
+<p class="u"><table width=95%><tr>
+<td><h3 class="z"><a href="#t10" name="t17">limit_one</a>
+<td align="right"><a href="#contents">contents</a></table>
+<p>This section refers to absolute values.
+<p><tt>limit_one</tt> is called by <tt>limit_one ( x )</tt> . <tt>limit_one</tt>
+ is always <tt>int</tt> .
+<p>Digital imprecision may produce a number that should be no greater than
+ <tt>1</tt>&nbsp;, yet has a small calculation error which puts the number
+ outside the limit. To enable this to be processed, calling
+ <nobr><tt>limit_one ( x ) ;</tt></nobr> tests and corrects any small error.
+<p>The action of <tt>limit_one</tt> depends on the content of the argument and
+ the definition of the macro
+ <a href="#mend5" name="mend4"><tt>MEND_PART</tt></a>&nbsp;.
+ Actions are described in this table.
+<p><table class="t" border=1 cellpadding=5 cellspacing=0>
+<tr><td>content of x<td>action<td>trace out<td>return
+<tr>
+<td>&gt; 1 + small error<br>1 + small error<br>1.00...<br>&lt; 1.00...
+<td align="center">.<br>sets f-p = 0<br>.<br>.
+<td align="center">.<br>'!'<br>.<br>.
+<td align="center">1<br>0<br>0<br>0
+</table>
+<p>When the i-p is <tt>1</tt> the allowed small error in the f-p is controlled
+ by the definion of <tt>MEND_PART</tt>&nbsp;. The tolerance is calculated as
+ <tt>2</tt> plus the reciprocal of <tt>MEND_PART</tt> times the length of the
+ f-p working in bits.
+<p>The default value for <tt>MEND_PART</tt> is <tt>64</tt>&nbsp;, which
+ accepts a number with i-p of <tt>1</tt> and a f-p with an active length that is
+ active over the bottom length of :
+<ul>bits per <a href="#bele0" name="beleF">element</a> *
+ <tt><a href="#sfr0" name="sfrE">S_FRAC</a> / 64 + 2</tt> .</ul>
+<p><tt><a href="#mend0" name="mend5">MEND_PART</a></tt> may be defined to
+ <tt>0</tt> , then <tt>limit_one</tt> accepts no error over
+ <tt>1.00&nbsp;...</tt>&nbsp;.
+<p><tt>limit_one</tt> is used to test the source values to <tt>b_inv_sin</tt>
+ and <tt>b_inv_cos</tt>&nbsp;, and to test the results from <tt>big_sin</tt>
+ and <tt>big_cos</tt>&nbsp;. This testing uses the definition of
+ <tt>MEND_PART</tt>&nbsp;, so a user's definition may have an effect in these
+ functions.
+
+<p align="right">done for the very last time<br>Alan Firminger<br>September 2011
+<h1>&nbsp;</h1>
+
+</html>
