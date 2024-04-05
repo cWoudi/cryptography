@@ -2,16 +2,20 @@ Write programs, in C, using a provided library, which allow:
 - to generate an RSA key (n,e,d) of size at least 1024 bits (2048 is better),
 - to encrypt/decrypt an integer m < n,
 - to encrypt/decrypt a file.
+  
 
 In particular, for the generation of the key, it will be necessary to use the Rabin-Miller algorithm for the generation of prime numbers.
 
+
 **Programs**
+
 
 Key generation : 
 `key_gen.c` generates an rsa key in two files (names passed on the command line):
 - key.pub (net and e)
 - key.priv (n, e and d)
 The integers will be stored online as strings representing the value in hexadecimal.
+
 
 Example key.pub file
 
@@ -20,19 +24,20 @@ Example key.pub file
 0x10001
 ```
 
+
 Encrypting an integer
 `crypt_rsa.c` allows you to encrypt/decrypt an integer stored in a hexadecimal text file. The command takes the following arguments:
 `crypt_rsa -e|-d file.key file.in file.out`
+
 
 Encrypting a file
 `crypt_rsa_file.c` allows you to encrypt/decrypt a file.
 `crypt_rsa -e|-d file.key file.in file.out`
 
+
 We will assume that the encryption/decryption uses the same endianness.
+
 
 Work to be done : 
 - your programs, which must use the provided library for handling large integers
 - a `Makefile`
-
-
-
