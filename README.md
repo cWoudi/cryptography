@@ -32,7 +32,6 @@ Encrypting an integer
 
 Encrypting a file
 `crypt_rsa_file.c` allows you to encrypt/decrypt a file.
-
 ```crypt_rsa -e|-d file.key file.in file.out```
 
 
