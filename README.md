@@ -7,10 +7,10 @@ Write programs, in C, using a provided library, which allow:
 In particular, for the generation of the key, it will be necessary to use the Rabin-Miller algorithm for the generation of prime numbers.
 
 
-**Programs**
+### **Programs**
 
 
-Key generation : 
+#### Key generation : 
 `key_gen.c` generates an rsa key in two files (names passed on the command line):
 - key.pub ($n$ and $e$)
 - key.priv ($n, e$ and $d$)
