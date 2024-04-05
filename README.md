@@ -1,6 +1,6 @@
 Write programs, in C, using a provided library, which allow:
-- to generate an RSA key (n,e,d) of size at least 1024 bits (2048 is better),
-- to encrypt/decrypt an integer m < n,
+- to generate an RSA key $(n,e,d)$ of size at least 1024 bits (2048 is better),
+- to encrypt/decrypt an integer $m < n$,
 - to encrypt/decrypt a file.
   
 
