@@ -12,8 +12,8 @@ In particular, for the generation of the key, it will be necessary to use the Ra
 
 Key generation : 
 `key_gen.c` generates an rsa key in two files (names passed on the command line):
-- key.pub (net and e)
-- key.priv (n, e and d)
+- key.pub ($n$ and $e$)
+- key.priv ($n, e$ and $d$)
 The integers will be stored online as strings representing the value in hexadecimal.
 
 
