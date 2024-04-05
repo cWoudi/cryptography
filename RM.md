@@ -8,7 +8,9 @@ Therefore, $a^{2^{r-1}d}$ is a solution of the equation $x^2 = 1 \mod p$. Since 
 exactly $2$ solutions: $-1$ and $1$.
 
 Thus, 
-\n![equation](equation.png)
+
+
+![equation](equation.png)
 
 
 By induction, it is shown that we are necessarily in one of the two situations:
