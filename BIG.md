@@ -1,27 +1,27 @@
 # bign 1.05
-Cette bibliothèque permet de faire du calcul avec une précision arbitraire. Seule la partie sur le calcul entier 
-nous interesse.
+This library allows for arithmetic operations with arbitrary precision. Only the part about integer calculation 
+is of interest to us.
 
-Le type de base est `big_n`. Il s'agit d'un tableau d'éléments (`int`) qui permet de faire de l'arithmétique par bloc.
+The basic type is `big_n`. It is an array of elements (`int`) that enables block arithmetic.
 
-La taille du tableau est gérée statiquement par la constante `PREC`. Il vous faudra la modifier et recompiler la bibliothèque suivant vos 
-besoins. 
+The array size is statically managed by the `PREC` constant. You will need to modify it and recompile the library according to your 
+needs.
 
-Avec déclaration
+With declaration
 
 ```c
 big_n n;
 ```
 
-`n` est un tableau d'int de taille `PREC + 1`. 1 élément est rajouté, et vaut 1 si l'entier est négatif.
-Le bloc de poids faible est placé dans `n[0]`.
+`n` is an `int` array of size `PREC + 1`. One element is added, and it equals 1 if the integer is negative.
+The least significant block is placed in `n[0]`.
 
 ```txt
 n[0] n[1] ... n[PREC-1] n[PREC]
                            ^
-						   |
-						 signe
+                           |
+                         sign
 ```
 
 
-La bibliothèque contient toutes les fonctions arithmétiques de base dont vous aurez besoin.
+The library contains all the basic arithmetic functions you will need.
